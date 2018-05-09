@@ -98,8 +98,8 @@ Example parsed email output:
 ```json
 [
   {
-    "attachments": [ ... ],
-    "headers": { ... },
+    "attachments": [ /* ... */ ],
+    "headers": { /* ... */ },
     "html": "<!DOCTYPE html>\n<html>...</html>",
     "text": "...",
     "textAsHtml": "<p>...</p>",
