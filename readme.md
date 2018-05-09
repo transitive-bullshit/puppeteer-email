@@ -13,8 +13,14 @@
   - github
   - facebook
   - etc.
-- comes with a [library](packages/puppeteer-email) and [cli](packages/puppeteer-email-cli)
+- comes with a [library](packages/puppeteer-email) and [CLI](packages/puppeteer-email-cli)
+- uses [puppeteer](https://github.com/GoogleChrome/puppeteer) under the hood
 - perfect for bots...
+
+
+## Status
+
+This project is an early WIP, but the [CLI](packages/puppeteer-email-cli) currently works to automate [Outlook](https://outlook.live.com). See [todo](#todo) for more details on the immediate roadmap.
 
 
 ## Packages
