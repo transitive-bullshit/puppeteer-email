@@ -14,17 +14,38 @@ npm install --save puppeteer-email
 
 ## Usage
 
-**TODO**
+```js
+const PuppeteerEmail = require('puppeteer-email')
+const PuppeteerEmailProviderOutlook = require('puppeteer-email-provider-outlook')
+
+const provider = new PuppeteerEmailProviderOutlook()
+const client = new PuppeteerEmail(provider)
+
+const session = await client.signin(user)
+const emails = await session.getEmails({
+  query: 'from:github'
+})
+await session.close()
+```
+
+See [parse-email](https://github.com/transitive-bullshit/parse-email) for details on email model properties.
 
 
 ## API
 
 **TODO**
 
+- puppeteer-email
+  - constructor(provider: PuppeteerEmailProvider)
+  - signup: function(user: PuppeteerEmailUser, opts) => Promise<PuppeteerEmailSession>
+  - signin: function(user: Object, opts) => Promise<PuppeteerEmailSession>
+
 
 ## Related
 
-- [puppeteer-email](https://github.com/transitive-bullshit/puppeteer-email) - Email automation driven by headless chrome.
+- [puppeteer-email-cli](packages/puppeteer-email-cli) - CLI for executing one-off email automation tasks.
+- [puppeteer-email-session](https://github.com/transitive-bullshit/puppeteer-email/tree/master/packages/puppeteer-email-session) - Holds state for an authenticated puppeteer email session.
+- [parse-email](https://github.com/transitive-bullshit/parse-email) - Parses mime-encoded email messages.
 
 
 ## License

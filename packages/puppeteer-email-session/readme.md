@@ -1,6 +1,6 @@
 # puppeteer-email-session
 
-> Encapsulates state for a puppeteer email session.
+> Holds state for an authenticated puppeteer email session.
 
 [![NPM](https://img.shields.io/npm/v/puppeteer-email-session.svg)](https://www.npmjs.com/package/puppeteer-email-session) [![Build Status](https://travis-ci.com/transitive-bullshit/puppeteer-email.svg?branch=master)](https://travis-ci.com/transitive-bullshit/puppeteer-email) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -20,6 +20,17 @@ npm install --save puppeteer-email-session
 ## API
 
 **TODO**
+
+- puppeteer-email-session
+  - username: String
+  - email: String
+  - browser: Puppeteer.Browser
+  - provider: PuppeteerEmailProvider
+  - isAuthenticated: Boolean
+  - signout: function() => Promise
+  - sendEmail: function(email: PuppeteerEmailModel, opts) => Promise
+  - getEmails: function(opts) => Promise
+  - close: function() => Promise
 
 
 ## Related

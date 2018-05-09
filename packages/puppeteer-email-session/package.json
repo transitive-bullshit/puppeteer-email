@@ -1,7 +1,7 @@
 {
   "name": "puppeteer-email-session",
   "version": "0.0.1",
-  "description": "Encapsulates state for a puppeteer email session.",
+  "description": "Holds state for an authenticated puppeteer email session.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
   "author": "Travis Fischer <travis@automagical.ai>",

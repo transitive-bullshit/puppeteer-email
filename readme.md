@@ -3,62 +3,101 @@
 > Email automation driven by headless chrome.
 
 
-## Status
+## Features
 
-Heavy WIP.
+- automate email account creation
+- automate email sending
+- automate email fetching
+- automate email verification from third-party services
+  - twitter
+  - github
+  - facebook
+  - etc.
+- perfect for bots...
 
 
 ## Packages
 
-This project is a WIP, with the following planned packages.
+- [puppeteer-email](packages/puppeteer-email) - Main library entrypoint.
+- [puppeteer-email-cli](packages/puppeteer-email-cli) - CLI for executing one-off email automation tasks.
+- [puppeteer-email-session](packages/puppeteer-email-session) - Holds state for an authenticated puppeteer email session.
+- [puppeteer-email-provider](packages/puppeteer-email-provider) - Abstract base class for puppeteer email providers.
+  - [puppeteer-email-provider-outlook](packages/puppeteer-email-provider-outlook) - Puppeteer email provider for [Outlook](https://outlook.live.com).
+  - [puppeteer-email-provider-gmail](packages/puppeteer-email-provider-gmail) - Puppeteer email provider for [Gmail](https://www.google.com/gmail). (TODO)
+  - [puppeteer-email-provider-yahoo](packages/puppeteer-email-provider-yahoo) - Puppeteer email provider for [Yahoo Mail](https://mail.yahoo.com/). (TODO)
 
-- puppeteer-email
-  - constructor(provider: PuppeteerEmailProvider)
-  - signup: function(user: PuppeteerEmailUser, opts) => Promise<PuppeteerEmailSession>
-  - signin: function(user: Object, opts) => Promise<PuppeteerEmailSession>
 
-- puppeteer-email-cli
+## Usage
 
-- puppeteer-email-provider
-  - signup: function(user: PuppeteerEmailUser, opts) => Promise<PuppeteerEmailSession>
-  - signin: function(user: Object, opts) => Promise<PuppeteerEmailSession>
-  - signout: function(session: PuppeteerEmailSession) => Promise
-  - sendEmail: function(session: PuppeteerEmailSession, email: Object, opts) => Promise
-  - getEmails: function(session: PuppeteerEmailSession, opts) => Promise<PuppeteerEmailModel>
+### CLI
 
-- puppeteer-email-model
-  - to: String
-  - from: String
-  - subject: String
-  - text: String
-  - html: String
+```bash
+npm install -g puppeteer-email-cli
+```
 
-- puppeteer-email-user
-  - username: String
-  - password: String
-  - firstName: String
-  - lastName: String
-  - birthday: Object
-    - day: Number
-    - month: Number
-    - year: Number
+```bash
+  Usage: puppeteer-email [options] [command]
 
-- puppeteer-email-session
-  - username: String
-  - email: String
-  - browser: Puppeteer.Browser
-  - provider: PuppeteerEmailProvider
-  - isAuthenticated: Boolean
-  - signout: function() => Promise
-  - sendEmail: function(email: PuppeteerEmailModel, opts) => Promise
-  - getEmails: function(opts) => Promise
+  Options:
 
-- puppeteer-email-provider-outlook
-- puppeteer-email-provider-gmail
-- puppeteer-email-provider-...
+    -V, --version              output the version number
+    -u, --username <username>  email account username
+    -p, --password <password>  email account password
+    -P, --provider <provider>  email provider (default: outlook)
+    -H, --no-headless          (puppeteer) disable headless mode
+    -s, --slow-mo <timeout>    (puppeteer) slows down operations by the given ms (default: 0)
+    -h, --help                 output usage information
 
-- captcha-solver
-- sms-verifier
+  Commands:
+
+    signup [options]
+    signin
+    get-emails [options]
+```
+
+
+### Library
+
+```bash
+npm install --save puppeteer-email
+```
+
+```js
+const PuppeteerEmail = require('puppeteer-email')
+const PuppeteerEmailProviderOutlook = require('puppeteer-email-provider-outlook')
+
+const provider = new PuppeteerEmailProviderOutlook()
+const client = new PuppeteerEmail(provider)
+
+const session = await client.signin(user)
+const emails = await session.getEmails({
+  query: 'from:github'
+})
+await session.close()
+```
+
+See [parse-email](https://github.com/transitive-bullshit/parse-email) for details on email model properties.
+
+
+## Todo
+
+- providers
+  - [x] outlook
+  - [ ] gmail
+  - [ ] yahoo mail
+- captcha-solder integration
+- sms-verifier integration
+
+
+## Related
+
+- [puppeteer](https://github.com/GoogleChrome/puppeteer) - Headless Chrome Node API used under the hood.
+- [parse-email](https://github.com/transitive-bullshit/parse-email) - Parses mime-encoded email messages.
+
+
+## Disclaimer
+
+Using this softare to violate the terms and conditions of any third-party service is strictly against the intent of this software. By using this software, you are acknowledging this fact and absolving the author or any potential liability or wrongdoing it may cause. This software is meant for testing and experimental purposes only, so please act responsibly.
 
 
 ## License

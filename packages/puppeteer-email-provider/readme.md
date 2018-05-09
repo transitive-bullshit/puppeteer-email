@@ -21,6 +21,13 @@ npm install --save puppeteer-email-provider
 
 **TODO**
 
+- puppeteer-email-provider
+  - signup: function(user: PuppeteerEmailUser, opts) => Promise<PuppeteerEmailSession>
+  - signin: function(user: Object, opts) => Promise<PuppeteerEmailSession>
+  - signout: function(session: PuppeteerEmailSession) => Promise
+  - sendEmail: function(session: PuppeteerEmailSession, email: Object, opts) => Promise
+  - getEmails: function(session: PuppeteerEmailSession, opts) => Promise<PuppeteerEmailModel>
+
 
 ## Related
 

@@ -18,7 +18,7 @@ module.exports = async (opts) => {
   await page.goto('https://outlook.live.com/mail/inbox')
 
   // search for an input query to narrow down email results
-  // TODO: don't require a query
+  // TODO: don't require a search query
   await page.waitFor('input[aria-label=Search]', { visible: true })
   await page.type('input[aria-label=Search]', query)
   await page.click('[data-click-source=search_box] [data-icon-name=Search]')
