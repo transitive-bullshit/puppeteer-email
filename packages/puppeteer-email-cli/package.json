@@ -6,6 +6,9 @@
   "repository": "transitive-bullshit/puppeteer-email-cli",
   "author": "Travis Fischer <travis@automagical.ai>",
   "license": "MIT",
+  "bin": {
+    "puppeteer-email": "index.js"
+  },
   "scripts": {
     "test": "ava -v && standard"
   },
@@ -22,6 +25,7 @@
     "standard": "^11.0.0"
   },
   "dependencies": {
+    "node-compat-require": "^1.0.3",
     "puppeteer-email": "^0.0.1",
     "puppeteer-email-provider-outlook": "^0.0.1"
   }
