@@ -21,6 +21,7 @@
     "standard": "^11.0.0"
   },
   "dependencies": {
+    "ow": "^0.3.0",
     "puppeteer-email-provider": "^0.0.1"
   }
 }

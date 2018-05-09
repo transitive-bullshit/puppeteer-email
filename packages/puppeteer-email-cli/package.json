@@ -25,6 +25,7 @@
     "standard": "^11.0.0"
   },
   "dependencies": {
+    "commander": "^2.15.1",
     "node-compat-require": "^1.0.3",
     "puppeteer-email": "^0.0.1",
     "puppeteer-email-provider-outlook": "^0.0.1"

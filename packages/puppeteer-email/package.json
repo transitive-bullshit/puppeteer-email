@@ -21,6 +21,8 @@
     "standard": "^11.0.0"
   },
   "dependencies": {
+    "faker": "^4.1.0",
+    "ow": "^0.3.0",
     "puppeteer-email-provider": "^0.0.1"
   }
 }

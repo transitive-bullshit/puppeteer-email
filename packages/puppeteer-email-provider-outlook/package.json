@@ -27,7 +27,6 @@
     "faker": "^4.1.0",
     "ow": "^0.3.0",
     "parse-email": "^1.0.0",
-    "puppeteer": "^1.4.0",
     "puppeteer-email-provider": "^0.0.1",
     "puppeteer-email-session": "^0.0.1",
     "tempy": "^0.2.1"

@@ -1,7 +1,6 @@
 'use strict'
 
 const ow = require('ow')
-const puppeteer = require('puppeteer')
 
 const PuppeteerEmailProvider = require('puppeteer-email-provider')
 const PuppeteerEmailSession = require('puppeteer-email-session')
@@ -21,42 +20,36 @@ class PuppeteerEmailProviderOutlook extends PuppeteerEmailProvider {
     ow(user, ow.object.plain.nonEmpty)
     ow(user.username, ow.string.nonEmpty)
     ow(user.password, ow.string.nonEmpty)
+    ow(opts, ow.object.nonEmpty)
+    ow(opts.browser, ow.object.nonEmpty)
 
-    const browser = opts.browser || await puppeteer.launch(opts.puppeteer)
-
-    await signup(user, {
-      browser,
-      ...opts
-    })
+    await signup(user, opts)
 
     return new PuppeteerEmailSession({
       user: {
         username: user.username,
         email: `${user.username}@outlook.com`
       },
-      browser,
+      browser: opts.browser,
       provider: this
     })
   }
 
-  async signin (user, opts = { }) {
+  async signin (user, opts) {
     ow(user, ow.object.plain.nonEmpty)
     ow(user.username, ow.string.nonEmpty)
     ow(user.password, ow.string.nonEmpty)
+    ow(opts, ow.object.nonEmpty)
+    ow(opts.browser, ow.object.nonEmpty)
 
-    const browser = opts.browser || await puppeteer.launch(opts.puppeteer)
-
-    await signin(user, {
-      browser,
-      ...opts
-    })
+    await signin(user, opts)
 
     return new PuppeteerEmailSession({
       user: {
         username: user.username,
         email: `${user.username}@outlook.com`
       },
-      browser,
+      browser: opts.browser,
       provider: this
     })
   }
