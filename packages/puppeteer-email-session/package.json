@@ -1,0 +1,24 @@
+{
+  "name": "puppeteer-email-session",
+  "version": "0.0.0",
+  "description": "Encapsulates state for a puppeteer email session.",
+  "main": "index.js",
+  "repository": "transitive-bullshit/puppeteer-email",
+  "author": "Travis Fischer <travis@automagical.ai>",
+  "license": "MIT",
+  "scripts": {
+    "test": "ava -v && standard"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "keywords": [
+    "puppeteer",
+    "email"
+  ],
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "standard": "^11.0.0"
+  },
+  "dependencies": {}
+}
