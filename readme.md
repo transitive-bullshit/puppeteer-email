@@ -95,7 +95,7 @@ console.log(emails)
 
 Example parsed email output:
 
-```json
+```js
 [
   {
     "attachments": [ /* ... */ ],

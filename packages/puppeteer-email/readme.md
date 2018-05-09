@@ -36,11 +36,11 @@ console.log(emails)
 
 Example parsed email output:
 
-```json
+```js
 [
   {
-    "attachments": [ ... ],
-    "headers": { ... },
+    "attachments": [ /* ... */ ],
+    "headers": { /* ... */ },
     "html": "<!DOCTYPE html>\n<html>...</html>",
     "text": "...",
     "textAsHtml": "<p>...</p>",
