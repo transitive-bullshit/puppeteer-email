@@ -1,0 +1,26 @@
+{
+  "name": "puppeteer-email",
+  "version": "0.0.1",
+  "description": "Abstract base class for puppeteer email providers.",
+  "main": "index.js",
+  "repository": "transitive-bullshit/puppeteer-email",
+  "author": "Travis Fischer <travis@automagical.ai>",
+  "license": "MIT",
+  "scripts": {
+    "test": "ava -v && standard"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "keywords": [
+    "puppeteer",
+    "email"
+  ],
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "standard": "^11.0.0"
+  },
+  "dependencies": {
+    "puppeteer-email-provider": "^0.0.1"
+  }
+}

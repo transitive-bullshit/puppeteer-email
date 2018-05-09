@@ -1,7 +1,7 @@
 {
   "name": "puppeteer-email-provider-outlook",
   "version": "0.0.0",
-  "description": "Abstract base class for puppeteer email providers.",
+  "description": "Puppeteer email provider for Outlook.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
   "author": "Travis Fischer <travis@automagical.ai>",
@@ -14,7 +14,9 @@
   },
   "keywords": [
     "puppeteer",
-    "email"
+    "email",
+    "outlook",
+    "microsoft"
   ],
   "devDependencies": {
     "ava": "^0.25.0",

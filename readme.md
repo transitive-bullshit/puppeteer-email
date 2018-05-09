@@ -5,7 +5,7 @@
 
 ## Status
 
-Extreme WIP.
+Heavy WIP.
 
 
 ## Packages
@@ -15,13 +15,13 @@ This project is a WIP, with the following planned packages.
 - puppeteer-email
   - constructor(provider: PuppeteerEmailProvider)
   - signup: function(user: PuppeteerEmailUser, opts) => Promise<PuppeteerEmailSession>
-  - signin: function(username: String, password: String, opts) => Promise<PuppeteerEmailSession>
+  - signin: function(user: Object, opts) => Promise<PuppeteerEmailSession>
 
 - puppeteer-email-cli
 
 - puppeteer-email-provider
   - signup: function(user: PuppeteerEmailUser, opts) => Promise<PuppeteerEmailSession>
-  - signin: function(username: String, password: String, opts) => Promise<PuppeteerEmailSession>
+  - signin: function(user: Object, opts) => Promise<PuppeteerEmailSession>
   - signout: function(session: PuppeteerEmailSession) => Promise
   - sendEmail: function(session: PuppeteerEmailSession, email: Object, opts) => Promise
   - getEmails: function(session: PuppeteerEmailSession, opts) => Promise<PuppeteerEmailModel>
