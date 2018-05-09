@@ -14,10 +14,25 @@ npm install --save puppeteer-email-cli
 
 ## Usage
 
-**TODO**
+```bash
+  Usage: puppeteer-email [options] [command]
 
+  Options:
 
-## API
+    -V, --version              output the version number
+    -u, --username <username>  email account username
+    -p, --password <password>  email account password
+    -P, --provider <provider>  email provider (default: outlook)
+    -H, --no-headless          (puppeteer) disable headless mode
+    -s, --slow-mo <timeout>    (puppeteer) slows down operations by the given ms (default: 0)
+    -h, --help                 output usage information
+
+  Commands:
+
+    signup [options]
+    signin
+    get-emails [options]
+```
 
 **TODO**
 
