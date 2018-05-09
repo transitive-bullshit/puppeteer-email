@@ -11,15 +11,13 @@ module.exports = async (page) => {
   await page.click('button[name~=View]')
 
   await page.waitFor('[role=dialog] .allowTextSelection', { visible: true })
-  await delay(100)
+  await delay(500)
   const content = await page.$eval('[role=dialog] .allowTextSelection', $el => $el.textContent)
   await page.click('[role=dialog] button')
-  await delay(100)
+  await delay(500)
 
   try {
     const email = await parseEmail(content)
-    console.log(JSON.stringify(email, null, 2))
-
     return email
   } catch (err) {
     return null

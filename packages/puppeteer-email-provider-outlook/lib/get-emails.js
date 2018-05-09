@@ -27,7 +27,7 @@ module.exports = async (opts) => {
   const $emails = await page.$$('[data-convid] > div > div')
 
   // fetch and parse individual emails
-  return pMap($emails, async ($email) => {
+  const emails = await pMap($emails, async ($email) => {
     await Promise.all([
       page.waitForNavigation(),
       $email.click()
@@ -37,4 +37,7 @@ module.exports = async (opts) => {
   }, {
     concurrency: 1
   })
+
+  await page.close()
+  return emails
 }
