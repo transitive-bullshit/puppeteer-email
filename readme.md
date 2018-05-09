@@ -13,6 +13,7 @@
   - github
   - facebook
   - etc.
+- comes with a [library](packages/puppeteer-email) and [cli](packages/puppeteer-email-cli)
 - perfect for bots...
 
 
