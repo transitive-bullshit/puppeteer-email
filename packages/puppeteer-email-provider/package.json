@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-email-provider",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Abstract base class for puppeteer email providers.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
@@ -19,6 +19,5 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "standard": "^11.0.0"
-  },
-  "dependencies": {}
+  }
 }

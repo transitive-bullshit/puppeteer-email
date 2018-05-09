@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-email-provider-outlook",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Puppeteer email provider for Outlook.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
@@ -27,8 +27,8 @@
     "faker": "^4.1.0",
     "ow": "^0.3.0",
     "parse-email": "^1.0.0",
-    "puppeteer-email-provider": "^0.0.1",
-    "puppeteer-email-session": "^0.0.1",
+    "puppeteer-email-provider": "^0.0.2",
+    "puppeteer-email-session": "^0.0.2",
     "tempy": "^0.2.1"
   }
 }
