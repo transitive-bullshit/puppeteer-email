@@ -19,12 +19,14 @@ module.exports = (argv) => {
 
   program
     .command('signup')
-    .option('-n, --first-name', 'user first name')
-    .option('-l, --last-name', 'user last name')
-    .option('-b, --birthday', 'user birthday (month/day/year)')
+    .option('-n, --first-name <name>', 'user first name')
+    .option('-l, --last-name <name>', 'user last name')
+    .option('-b, --birthday <date>', 'user birthday (month/day/year); eg 9/20/1986')
     .action(async (opts) => {
       try {
         const Provider = providers[program.provider]
+        if (!Provider) throw new Error('invalid provider')
+
         const provider = new Provider()
         const client = new PuppeteerEmail(provider)
 
@@ -47,6 +49,8 @@ module.exports = (argv) => {
           }
         })
 
+        await session.close()
+
         user.email = session.email
         console.log(JSON.stringify(user, null, 2))
       } catch (err) {
@@ -61,6 +65,7 @@ module.exports = (argv) => {
       try {
         const Provider = providers[program.provider]
         if (!Provider) throw new Error('invalid provider')
+
         const provider = new Provider()
         const client = new PuppeteerEmail(provider)
 
@@ -84,7 +89,57 @@ module.exports = (argv) => {
           }
         })
 
+        await session.close()
+
         console.log(session.email)
+      } catch (err) {
+        console.error(err)
+        process.exit(1)
+      }
+    })
+
+  program
+    .command('get-emails').alias('g')
+    .option('-q, --query <string>', 'query string to filter emails')
+    .action(async (opts) => {
+      try {
+        const Provider = providers[program.provider]
+        if (!Provider) throw new Error('invalid provider')
+
+        const provider = new Provider()
+        const client = new PuppeteerEmail(provider)
+
+        const user = {
+          username: program.username,
+          password: program.password
+        }
+
+        if (!user.username || !user.username.length) {
+          throw new Error('missing required "username"')
+        }
+
+        if (!user.password || !user.password.length) {
+          throw new Error('missing required "password"')
+        }
+
+        if (!opts.query || !opts.query.length) {
+          throw new Error('missing required "query"')
+        }
+
+        const session = await client.signin(user, {
+          puppeteer: {
+            headless: !!program.headless,
+            slowMo: program.slowMo
+          }
+        })
+
+        const emails = await session.getEmails({
+          query: opts.query
+        })
+
+        await session.close()
+
+        console.log(JSON.stringify(emails, null, 2))
       } catch (err) {
         console.error(err)
         process.exit(1)

@@ -42,12 +42,14 @@ class PuppeteerEmailProviderOutlook extends PuppeteerEmailProvider {
     ow(opts, ow.object.nonEmpty)
     ow(opts.browser, ow.object.nonEmpty)
 
+    user.email = user.email || `${user.username}@outlook.com`
+
     await signin(user, opts)
 
     return new PuppeteerEmailSession({
       user: {
         username: user.username,
-        email: `${user.username}@outlook.com`
+        email: user.email
       },
       browser: opts.browser,
       provider: this
@@ -55,7 +57,7 @@ class PuppeteerEmailProviderOutlook extends PuppeteerEmailProvider {
   }
 
   async signout (session) {
-    ow(session, ow.instanceOf(PuppeteerEmailSession))
+    ow(session, ow.object.instanceOf(PuppeteerEmailSession))
 
     return signout({
       browser: session.browser
@@ -63,7 +65,7 @@ class PuppeteerEmailProviderOutlook extends PuppeteerEmailProvider {
   }
 
   async sendEmail (session, email, opts = { }) {
-    ow(session, ow.instanceOf(PuppeteerEmailSession))
+    ow(session, ow.object.instanceOf(PuppeteerEmailSession))
     ow(email, ow.object)
     ow(opts, ow.object.plain)
 
@@ -74,7 +76,7 @@ class PuppeteerEmailProviderOutlook extends PuppeteerEmailProvider {
   }
 
   async getEmails (session, opts = { }) {
-    ow(session, ow.instanceOf(PuppeteerEmailSession))
+    ow(session, ow.object.instanceOf(PuppeteerEmailSession))
     ow(opts, ow.object.plain)
 
     return getEmails({

@@ -1,0 +1,6 @@
+
+  // fetch list of email ids
+  const ids = await page.$$eval('[data-convid]', $els => {
+    return $els.map(($el) => $el.getAttribute('data-convid'))
+  })
+

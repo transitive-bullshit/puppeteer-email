@@ -23,6 +23,7 @@
   "dependencies": {
     "faker": "^4.1.0",
     "ow": "^0.3.0",
+    "puppeteer": "^1.4.0",
     "puppeteer-email-provider": "^0.0.1"
   }
 }

@@ -29,7 +29,7 @@ class PuppeteerEmailSession {
       return
     }
 
-    await this._opts.provider.signout(this)
+    await this.provider.signout(this)
     this._isAuthenticated = false
   }
 
@@ -38,7 +38,7 @@ class PuppeteerEmailSession {
       throw new Error(`"${this.email}" sendEmail not authenticated`)
     }
 
-    return this._opts.provider.sendEmail(this, email, opts)
+    return this.provider.sendEmail(this, email, opts)
   }
 
   async getEmails (opts) {
@@ -46,7 +46,11 @@ class PuppeteerEmailSession {
       throw new Error(`"${this.email}" getEmails not authenticated`)
     }
 
-    return this._opts.provider.getEmails(this, opts)
+    return this.provider.getEmails(this, opts)
+  }
+
+  async close () {
+    return this.browser.close()
   }
 }
 
