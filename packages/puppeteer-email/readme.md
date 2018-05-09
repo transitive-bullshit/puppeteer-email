@@ -11,8 +11,12 @@
 npm install --save puppeteer-email
 ```
 
+You'll also need to install at least one provider.
+
 
 ## Usage
+
+This example signs into an [Outlook](https://outlook.live.com) account, searches for a given query, and then parses and returns all emails returned for that query.
 
 ```js
 const PuppeteerEmail = require('puppeteer-email')
@@ -21,10 +25,11 @@ const PuppeteerEmailProviderOutlook = require('puppeteer-email-provider-outlook'
 const provider = new PuppeteerEmailProviderOutlook()
 const client = new PuppeteerEmail(provider)
 
-const session = await client.signin(user)
-const emails = await session.getEmails({
-  query: 'from:github'
-})
+const username = 'XXX'
+const password = 'XXX'
+
+const session = await client.signin({ username, password })
+const emails = await session.getEmails({ query: 'from:github' })
 await session.close()
 ```
 

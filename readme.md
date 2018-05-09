@@ -58,8 +58,11 @@ npm install -g puppeteer-email-cli
 
 ### Library
 
+This example signs into an [Outlook](https://outlook.live.com) account, searches for a given query, and then parses and returns all emails returned for that query.
+
 ```bash
 npm install --save puppeteer-email
+npm install --save puppeteer-email-provider-outlook
 ```
 
 ```js
@@ -69,10 +72,11 @@ const PuppeteerEmailProviderOutlook = require('puppeteer-email-provider-outlook'
 const provider = new PuppeteerEmailProviderOutlook()
 const client = new PuppeteerEmail(provider)
 
-const session = await client.signin(user)
-const emails = await session.getEmails({
-  query: 'from:github'
-})
+const username = 'XXX'
+const password = 'XXX'
+
+const session = await client.signin({ username, password })
+const emails = await session.getEmails({ query: 'from:github' })
 await session.close()
 ```
 
@@ -85,7 +89,7 @@ See [parse-email](https://github.com/transitive-bullshit/parse-email) for detail
   - [x] outlook
   - [ ] gmail
   - [ ] yahoo mail
-- captcha-solder integration
+- captcha-solver integration
 - sms-verifier integration
 
 
