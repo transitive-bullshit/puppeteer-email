@@ -1,26 +1,28 @@
 {
-  "name": "puppeteer-email",
+  "name": "puppeteer-email-cli",
   "version": "0.0.1",
-  "description": "Email automation drive by headless chrome.",
+  "description": "CLI for email automation driven by headless chrome.",
   "main": "index.js",
-  "repository": "transitive-bullshit/puppeteer-email",
+  "repository": "transitive-bullshit/puppeteer-email-cli",
   "author": "Travis Fischer <travis@automagical.ai>",
   "license": "MIT",
   "scripts": {
     "test": "ava -v && standard"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=4"
   },
   "keywords": [
     "puppeteer",
-    "email"
+    "email",
+    "cli"
   ],
   "devDependencies": {
     "ava": "^0.25.0",
     "standard": "^11.0.0"
   },
   "dependencies": {
-    "puppeteer-email-provider": "^0.0.1"
+    "puppeteer-email": "^0.0.1",
+    "puppeteer-email-provider-outlook": "^0.0.1"
   }
 }

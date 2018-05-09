@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-email-provider-outlook",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Puppeteer email provider for Outlook.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
