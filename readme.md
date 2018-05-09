@@ -64,6 +64,8 @@ npm install -g puppeteer-email-cli
     get-emails [options]
 ```
 
+See the [CLI](packages/puppeteer-email-cli) for more in-depth CLI docs.
+
 
 ### Library
 
@@ -87,7 +89,48 @@ const password = 'XXX'
 const session = await client.signin({ username, password })
 const emails = await session.getEmails({ query: 'from:github' })
 await session.close()
+
+console.log(emails)
 ```
+
+Example parsed email output:
+
+```json
+[
+  {
+    "attachments": [ ... ],
+    "headers": { ... },
+    "html": "<!DOCTYPE html>\n<html>...</html>",
+    "text": "...",
+    "textAsHtml": "<p>...</p>",
+    "subject": "Example email subject",
+    "date": "2018-05-09T14:17:02.000Z",
+    "to": {
+      "value": [
+        {
+          "address": "fischxxxx@outlook.com",
+          "name": "Travis Fischer"
+        }
+      ],
+      "html": "<span class=\"mp_address_name\">Travis Fischer</span> &lt;<a href=\"mailto:fischxxxx@outlook.com\" class=\"mp_address_email\">fischxxxx@outlook.com</a>&gt;",
+      "text": "Travis Fischer <fischxxxx@outlook.com>"
+    },
+    "from": {
+      "value": [
+        {
+          "address": "noreply@github.com",
+          "name": "GitHub"
+        }
+      ],
+      "html": "<span class=\"mp_address_name\">GitHub</span> &lt;<a href=\"mailto:noreply@github.com\" class=\"mp_address_email\">noreply@github.com</a>&gt;",
+      "text": "GitHub <noreply@github.com>"
+    },
+    "messageId": "<01.B3.11399.xxxxxxxx@momentum1-mta1>"
+  }
+]
+```
+
+See the [library](packages/puppeteer-email) for more in-depth library docs.
 
 See [parse-email](https://github.com/transitive-bullshit/parse-email) for details on email model properties.
 
