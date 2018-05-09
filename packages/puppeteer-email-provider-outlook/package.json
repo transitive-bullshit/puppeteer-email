@@ -1,5 +1,5 @@
 {
-  "name": "puppeteer-email-provider",
+  "name": "puppeteer-email-provider-outlook",
   "version": "0.0.0",
   "description": "Abstract base class for puppeteer email providers.",
   "main": "index.js",
@@ -21,6 +21,13 @@
     "standard": "^11.0.0"
   },
   "dependencies": {
-    "ow": "^0.3.0"
+    "delay": "^2.0.0",
+    "faker": "^4.1.0",
+    "ow": "^0.3.0",
+    "parse-email": "^1.0.0",
+    "puppeteer": "^1.4.0",
+    "puppeteer-email-provider": "^0.0.1",
+    "puppeteer-email-session": "^0.0.1",
+    "tempy": "^0.2.1"
   }
 }

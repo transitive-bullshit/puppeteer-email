@@ -45,7 +45,6 @@ This project is a WIP, with the following planned packages.
 
 - puppeteer-email-session
   - username: String
-  - password: String
   - email: String
   - browser: Puppeteer.Browser
   - provider: PuppeteerEmailProvider

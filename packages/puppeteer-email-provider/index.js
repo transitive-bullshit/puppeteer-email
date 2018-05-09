@@ -1,29 +1,27 @@
 'use strict'
 
 class PuppeteerEmailProvider {
-  constructor (name) {
-    this._name = name
+  get name () {
+    throw new Error('email provider must override "name"')
   }
 
-  get name () { return this._name }
-
-  signup (user, opts) {
+  async signup (user, opts = { }) {
     throw new Error('email provider must override "signup"')
   }
 
-  signin (username, password, opts) {
+  async signin (user, opts = { }) {
     throw new Error('email provider must override "signin"')
   }
 
-  signout (session) {
+  async signout (session) {
     throw new Error('email provider must override "signout"')
   }
 
-  sendEmail (session, email, opts) {
+  async sendEmail (session, email, opts) {
     throw new Error('email provider must override "sendEmail"')
   }
 
-  getEmails (session, opts) {
+  async getEmails (session, opts) {
     throw new Error('email provider must override "getEmails"')
   }
 }
