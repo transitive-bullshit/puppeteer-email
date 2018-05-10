@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-email-providers",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Factory for puppeteer email providers.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
@@ -21,6 +21,6 @@
     "standard": "^11.0.0"
   },
   "dependencies": {
-    "puppeteer-email-provider-outlook": "^0.0.3"
+    "puppeteer-email-provider-outlook": "^0.0.4"
   }
 }
