@@ -20,7 +20,7 @@
 
 ## Status
 
-This project is an early WIP, but the [CLI](packages/puppeteer-email-cli) currently works to automate [Outlook](https://outlook.live.com). See [todo](#todo) for more details on the immediate roadmap.
+This project is an early WIP, but the [CLI](packages/puppeteer-email-cli) currently works to automate [Outlook](https://outlook.live.com).
 
 
 ## Packages
@@ -133,16 +133,6 @@ Example parsed email output:
 See the [library](packages/puppeteer-email) for more in-depth library docs.
 
 See [parse-email](https://github.com/transitive-bullshit/parse-email) for details on email model properties.
-
-
-## Todo
-
-- providers
-  - [x] outlook
-  - [ ] gmail
-  - [ ] yahoo mail
-- captcha-solver integration
-- sms-verifier integration
 
 
 ## Related

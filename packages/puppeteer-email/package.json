@@ -1,7 +1,7 @@
 {
   "name": "puppeteer-email",
   "version": "0.0.2",
-  "description": "Email automation drive by headless chrome.",
+  "description": "Email automation driven by headless chrome.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
   "author": "Travis Fischer <travis@automagical.ai>",
