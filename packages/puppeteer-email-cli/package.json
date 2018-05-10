@@ -28,6 +28,6 @@
     "commander": "^2.15.1",
     "node-compat-require": "^1.0.3",
     "puppeteer-email": "^0.0.3",
-    "puppeteer-email-provider-outlook": "^0.0.3"
+    "puppeteer-email-providers": "^0.0.1"
   }
 }

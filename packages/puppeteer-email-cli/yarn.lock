@@ -3505,6 +3505,10 @@ p-locate@^2.0.0:
   dependencies:
     p-limit "^1.1.0"
 
+p-map@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.2.0.tgz#e4e94f311eabbc8633a1e79908165fca26241b6b"
+
 p-try@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
@@ -3837,34 +3841,44 @@ punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-puppeteer-email-provider-outlook@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-email-provider-outlook/-/puppeteer-email-provider-outlook-0.0.1.tgz#b44605f1bea323edbb35655dda9a7174e2fc73d3"
+puppeteer-email-provider-outlook@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/puppeteer-email-provider-outlook/-/puppeteer-email-provider-outlook-0.0.3.tgz#29ab2fb51da4847d164f2c5ecdd01f6594918207"
   dependencies:
     delay "^2.0.0"
     faker "^4.1.0"
     ow "^0.3.0"
+    p-map "^1.2.0"
     parse-email "^1.0.0"
-    puppeteer "^1.4.0"
-    puppeteer-email-provider "^0.0.1"
-    puppeteer-email-session "^0.0.1"
+    puppeteer-email-provider "^0.0.2"
+    puppeteer-email-session "^0.0.2"
     tempy "^0.2.1"
 
-puppeteer-email-provider@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-email-provider/-/puppeteer-email-provider-0.0.1.tgz#c5018840a425e89973917b41fc00251afb55c39e"
+puppeteer-email-provider@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-email-provider/-/puppeteer-email-provider-0.0.2.tgz#9f00cf7a1010f9ea03911ddbfda07dda95c2bee9"
 
-puppeteer-email-session@^0.0.1:
+puppeteer-email-providers@^0.0.1:
   version "0.0.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-email-session/-/puppeteer-email-session-0.0.1.tgz#dd0ac8d190499f9c1087c6dd3995f976cf48d5ba"
+  resolved "https://registry.yarnpkg.com/puppeteer-email-providers/-/puppeteer-email-providers-0.0.1.tgz#18b60ca005c0d6cfe90fc16e8e90a4b32c5f3dbb"
   dependencies:
-    puppeteer-email-provider "^0.0.1"
+    puppeteer-email-provider-outlook "^0.0.3"
 
-puppeteer-email@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-email/-/puppeteer-email-0.0.1.tgz#dd6002071a69501b7bb90eeb753e7f477d46421c"
+puppeteer-email-session@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-email-session/-/puppeteer-email-session-0.0.2.tgz#fa1ead8c1d9bd97230f566f664901c206ae0b503"
   dependencies:
-    puppeteer-email-provider "^0.0.1"
+    ow "^0.3.0"
+    puppeteer-email-provider "^0.0.2"
+
+puppeteer-email@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/puppeteer-email/-/puppeteer-email-0.0.3.tgz#97cfc3a75b10fad6fef89bedc4ed0ad750d7bb68"
+  dependencies:
+    faker "^4.1.0"
+    ow "^0.3.0"
+    puppeteer "^1.4.0"
+    puppeteer-email-provider "^0.0.2"
 
 puppeteer@^1.4.0:
   version "1.4.0"

@@ -4,8 +4,8 @@
 const program = require('commander')
 
 const PuppeteerEmail = require('puppeteer-email')
+const providerFactory = require('puppeteer-email-providers')
 
-const providers = require('./providers')
 const { version } = require('../package')
 
 module.exports = (argv) => {
@@ -13,6 +13,7 @@ module.exports = (argv) => {
     .version(version)
     .option('-u, --username <username>', 'email account username')
     .option('-p, --password <password>', 'email account password')
+    .option('-e, --email <email>', 'email account address (overrides username and provider)')
     .option('-P, --provider <provider>', 'email provider', /^(outlook)$/, 'outlook')
     .option('-H, --no-headless', '(puppeteer) disable headless mode')
     .option('-s, --slow-mo <timeout>', '(puppeteer) slows down operations by the given ms', parseInt, 0)
@@ -24,10 +25,9 @@ module.exports = (argv) => {
     .option('-b, --birthday <date>', 'user birthday (month/day/year); eg 9/20/1986')
     .action(async (opts) => {
       try {
-        const Provider = providers[program.provider]
-        if (!Provider) throw new Error('invalid provider')
-
-        const provider = new Provider()
+        const provider = program.email
+          ? providerFactory.getProviderByEmail(program.email)
+          : providerFactory.getProviderByName(program.provider)
         const client = new PuppeteerEmail(provider)
 
         const user = {
@@ -63,10 +63,9 @@ module.exports = (argv) => {
     .command('signin')
     .action(async () => {
       try {
-        const Provider = providers[program.provider]
-        if (!Provider) throw new Error('invalid provider')
-
-        const provider = new Provider()
+        const provider = program.email
+          ? providerFactory.getProviderByEmail(program.email)
+          : providerFactory.getProviderByName(program.provider)
         const client = new PuppeteerEmail(provider)
 
         const user = {
@@ -99,14 +98,13 @@ module.exports = (argv) => {
     })
 
   program
-    .command('get-emails').alias('g')
+    .command('get-emails')
     .option('-q, --query <string>', 'query string to filter emails')
     .action(async (opts) => {
       try {
-        const Provider = providers[program.provider]
-        if (!Provider) throw new Error('invalid provider')
-
-        const provider = new Provider()
+        const provider = program.email
+          ? providerFactory.getProviderByEmail(program.email)
+          : providerFactory.getProviderByName(program.provider)
         const client = new PuppeteerEmail(provider)
 
         const user = {

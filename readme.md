@@ -28,6 +28,7 @@ This project is an early WIP, but the [CLI](packages/puppeteer-email-cli) curren
 - [puppeteer-email](packages/puppeteer-email) - Main library entrypoint.
 - [puppeteer-email-cli](packages/puppeteer-email-cli) - CLI for executing one-off email automation tasks.
 - [puppeteer-email-session](packages/puppeteer-email-session) - Holds state for an authenticated puppeteer email session.
+- [puppeteer-email-providers](packages/puppeteer-email-providers) - Factory for puppeteer email providers.
 - [puppeteer-email-provider](packages/puppeteer-email-provider) - Abstract base class for puppeteer email providers.
   - [puppeteer-email-provider-outlook](packages/puppeteer-email-provider-outlook) - Puppeteer email provider for [Outlook](https://outlook.live.com).
   - [puppeteer-email-provider-gmail](packages/puppeteer-email-provider-gmail) - Puppeteer email provider for [Gmail](https://www.google.com/gmail). (TODO)
