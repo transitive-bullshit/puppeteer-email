@@ -3,11 +3,11 @@
 const ow = require('ow')
 const PuppeteerEmailProviderOutlook = require('puppeteer-email-provider-outlook')
 
-module.exports.providers = {
+exports.providers = {
   'outlook': PuppeteerEmailProviderOutlook
 }
 
-module.exports.getProviderByName = (name, opts) => {
+exports.getProviderByName = (name, opts) => {
   ow(name, ow.string.nonEmpty)
   const Provider = module.exports.providers[name.toLowerCase()]
 
@@ -15,7 +15,7 @@ module.exports.getProviderByName = (name, opts) => {
   return new Provider(opts)
 }
 
-module.exports.getProviderByEmail = (email, opts) => {
+exports.getProviderByEmail = (email, opts) => {
   ow(email, ow.string.nonEmpty)
 
   let Provider
