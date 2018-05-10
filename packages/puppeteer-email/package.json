@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-email",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Email automation driven by headless chrome.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
