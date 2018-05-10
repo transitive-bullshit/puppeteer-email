@@ -37,8 +37,16 @@ class PuppeteerEmailProviderOutlook extends PuppeteerEmailProvider {
 
   async signin (user, opts) {
     ow(user, ow.object.plain.nonEmpty)
-    ow(user.username, ow.string.nonEmpty)
     ow(user.password, ow.string.nonEmpty)
+
+    if (user.username) {
+      ow(user.username, ow.string.nonEmpty)
+    } else if (user.email) {
+      ow(user.email, ow.string.nonEmpty)
+    } else {
+      throw new Error('missing required parameter "username" or "email"')
+    }
+
     ow(opts, ow.object.nonEmpty)
     ow(opts.browser, ow.object.nonEmpty)
 

@@ -38,6 +38,21 @@ class PuppeteerEmail {
   async signin (user, opts = { }) {
     const browser = opts.browser || await puppeteer.launch(opts.puppeteer)
 
+    ow(user, ow.object.plain.nonEmpty)
+    ow(user.password, ow.string.nonEmpty)
+
+    if (user.username) {
+      ow(user.username, ow.string.nonEmpty)
+      user.email = `${user.username}@outlook.com`
+      ow(user.email, ow.string.nonEmpty)
+    } else if (user.email) {
+      ow(user.email, ow.string.nonEmpty)
+      user.username = user.email.split('@')[0].trim()
+      ow(user.username, ow.string.nonEmpty)
+    } else {
+      throw new Error('missing required parameter "username" or "email"')
+    }
+
     return this._provider.signin(user, {
       browser,
       ...opts
