@@ -2492,6 +2492,10 @@ p-locate@^2.0.0:
   dependencies:
     p-limit "^1.1.0"
 
+p-map@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.2.0.tgz#e4e94f311eabbc8633a1e79908165fca26241b6b"
+
 p-try@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
@@ -2717,15 +2721,16 @@ pseudomap@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
 
-puppeteer-email-provider@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-email-provider/-/puppeteer-email-provider-0.0.1.tgz#c5018840a425e89973917b41fc00251afb55c39e"
+puppeteer-email-provider@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-email-provider/-/puppeteer-email-provider-0.0.2.tgz#9f00cf7a1010f9ea03911ddbfda07dda95c2bee9"
 
-puppeteer-email-session@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-email-session/-/puppeteer-email-session-0.0.1.tgz#dd0ac8d190499f9c1087c6dd3995f976cf48d5ba"
+puppeteer-email-session@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-email-session/-/puppeteer-email-session-0.0.2.tgz#fa1ead8c1d9bd97230f566f664901c206ae0b503"
   dependencies:
-    puppeteer-email-provider "^0.0.1"
+    ow "^0.3.0"
+    puppeteer-email-provider "^0.0.2"
 
 randomatic@^3.0.0:
   version "3.0.0"

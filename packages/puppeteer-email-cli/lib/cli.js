@@ -5,8 +5,8 @@ const program = require('commander')
 
 const PuppeteerEmail = require('puppeteer-email')
 
-const providers = require('./lib/providers')
-const { version } = require('./package')
+const providers = require('./providers')
+const { version } = require('../package')
 
 module.exports = (argv) => {
   program

@@ -2,4 +2,4 @@
 'use strict'
 
 const compatRequire = require('node-compat-require')
-compatRequire('./cli', { node: '>= 8' })
+compatRequire('./lib/cli', { node: '>= 8' })
