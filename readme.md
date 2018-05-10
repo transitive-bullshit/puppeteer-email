@@ -140,6 +140,8 @@ See [parse-email](https://github.com/transitive-bullshit/parse-email) for detail
 - [puppeteer](https://github.com/GoogleChrome/puppeteer) - Headless Chrome Node API used under the hood.
 - [parse-email](https://github.com/transitive-bullshit/parse-email) - Parses mime-encoded email messages.
 - [sms-number-verifier](https://github.com/transitive-bullshit/sms-number-verifier) - Allows you to spoof SMS number verification.
+- [puppeteer-github](https://github.com/transitive-bullshit/puppeteer-github) - GitHub automation driven by headless chrome.
+- [awesome-puppeteer](https://github.com/transitive-bullshit/awesome-puppeteer) - A curated list of awesome puppeteer resources.
 
 
 ## Disclaimer
