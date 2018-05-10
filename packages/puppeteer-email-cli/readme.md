@@ -34,7 +34,7 @@ npm install --save puppeteer-email-cli
     get-emails [options]
 ```
 
-**TODO**
+**TODO**: moar betterer docs
 
 
 ## Related
