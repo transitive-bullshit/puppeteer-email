@@ -1,4 +1,21 @@
 {
+  "private": true,
+  "description": "Email automation driven by headless chrome.",
+  "repository": "transitive-bullshit/puppeteer-email",
+  "author": "Travis Fischer <travis@automagical.ai>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "install": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap",
+    "test": "lerna run test",
+    "prepare": "lerna run prepare"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "lerna": "^2.11.0"
   },

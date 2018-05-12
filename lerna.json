@@ -4,5 +4,6 @@
     "packages/*"
   ],
   "version": "independent",
+  "useWorkspaces": true,
   "npmClient": "yarn"
 }

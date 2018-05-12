@@ -7,7 +7,7 @@
   "author": "Travis Fischer <travis@automagical.ai>",
   "license": "MIT",
   "scripts": {
-    "test": "ava -v && standard"
+    "test": "standard"
   },
   "engines": {
     "node": ">=8"
