@@ -8,7 +8,6 @@
     "node": ">=8"
   },
   "scripts": {
-    "postinstall": "lerna bootstrap",
     "bootstrap": "lerna bootstrap",
     "test": "lerna run test",
     "prepare": "lerna run prepare"
