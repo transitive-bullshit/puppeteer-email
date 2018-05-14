@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-email-cli",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "CLI for email automation driven by headless chrome.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email-cli",
@@ -29,6 +29,6 @@
   "dependencies": {
     "commander": "^2.15.1",
     "node-compat-require": "^1.0.3",
-    "puppeteer-email": "^0.0.4"
+    "puppeteer-email": "^0.0.5"
   }
 }

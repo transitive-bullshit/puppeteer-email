@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-email",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Email automation driven by headless chrome.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
@@ -25,7 +25,7 @@
     "faker": "^4.1.0",
     "ow": "^0.3.0",
     "puppeteer": "^1.4.0",
-    "puppeteer-email-provider": "^0.0.2",
-    "puppeteer-email-provider-outlook": "^0.0.4"
+    "puppeteer-email-provider": "^0.0.3",
+    "puppeteer-email-provider-outlook": "^0.0.5"
   }
 }
