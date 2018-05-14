@@ -42,27 +42,43 @@ Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 Creates a new email account using this provider.
 
+Some providers may require additional user information during signup.
+
+Returns an email session with the authenticated puppeteer browser.
+
 **Parameters**
 
 -   `user` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** User info for the account to create
--   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Options (optional, default `{}`)
--   `username` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Username
--   `password` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Password
+    -   `user.username` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Username
+    -   `user.password` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Password
+    -   `user.firstName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** User's given name
+    -   `user.lastName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** User's family name
+    -   `user.birthday` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** User's birthday
+        -   `user.birthday.month` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** User's birthday month
+        -   `user.birthday.day` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** User's birthday day
+        -   `user.birthday.year` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** User's birthday year
+-   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Options
+    -   `opts.browser` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Puppeteer browser instance to use
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;PuppeteerEmailSession>** 
 
 #### signin
 
 Signs into an existing email account using this provider.
 
+You must specify either `user.username` or `user.email`.
+
+Returns an email session with the authenticated puppeteer browser.
+
 **Parameters**
 
--   `user` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** User info for the account to create
--   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Options (optional, default `{}`)
--   `username` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Username
--   `password` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Password
+-   `user` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** User info for the account to sign into
+    -   `user.username` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Username (implies email)
+    -   `user.email` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Email (implies username)
+-   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Options
+    -   `opts.browser` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Puppeteer browser instance to use
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;PuppeteerEmailSession>** 
 
 #### signout
 

@@ -153,7 +153,7 @@ class PuppeteerEmailProviderOutlook extends PuppeteerEmailProvider {
    * @param {object} [opts] - Options
    * @param {object} [opts.query] - Search query to narrow down results
    *
-   * @return {Promise<Object>}
+   * @return {Promise<Array<Object>>}
    */
   async getEmails (session, opts = { }) {
     ow(session, ow.object.instanceOf(PuppeteerEmailSession))
