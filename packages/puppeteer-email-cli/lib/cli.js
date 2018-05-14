@@ -4,7 +4,6 @@
 const program = require('commander')
 
 const PuppeteerEmail = require('puppeteer-email')
-const providerFactory = require('puppeteer-email-providers')
 
 const { version } = require('../package')
 
@@ -25,10 +24,7 @@ module.exports = (argv) => {
     .option('-b, --birthday <date>', 'user birthday (month/day/year); eg 9/20/1986')
     .action(async (opts) => {
       try {
-        const provider = program.email
-          ? providerFactory.getProviderByEmail(program.email)
-          : providerFactory.getProviderByName(program.provider)
-        const client = new PuppeteerEmail(provider)
+        const client = new PuppeteerEmail(program.email || program.provider)
 
         const user = {
           username: program.username,
@@ -63,10 +59,7 @@ module.exports = (argv) => {
     .command('signin')
     .action(async () => {
       try {
-        const provider = program.email
-          ? providerFactory.getProviderByEmail(program.email)
-          : providerFactory.getProviderByName(program.provider)
-        const client = new PuppeteerEmail(provider)
+        const client = new PuppeteerEmail(program.email || program.provider)
 
         const user = {
           username: program.username,
@@ -102,10 +95,7 @@ module.exports = (argv) => {
     .option('-q, --query <string>', 'query string to filter emails')
     .action(async (opts) => {
       try {
-        const provider = program.email
-          ? providerFactory.getProviderByEmail(program.email)
-          : providerFactory.getProviderByName(program.provider)
-        const client = new PuppeteerEmail(provider)
+        const client = new PuppeteerEmail(program.email || program.provider)
 
         const user = {
           username: program.username,

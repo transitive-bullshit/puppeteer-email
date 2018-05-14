@@ -3,7 +3,7 @@
 const { test } = require('ava')
 const PuppeteerEmailProviderOutlook = require('puppeteer-email-provider-outlook')
 
-const factory = require('.')
+const factory = require('./providers')
 
 test('outlook', (t) => {
   t.is(factory.providers.outlook, PuppeteerEmailProviderOutlook)

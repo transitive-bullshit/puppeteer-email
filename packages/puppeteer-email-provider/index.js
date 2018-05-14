@@ -17,8 +17,8 @@ class PuppeteerEmailProvider {
    * Creates a new email account using this provider.
    *
    * @param {object} user - User info for the account to create
-   * @param {string} username - Username
-   * @param {string} password - Password
+   * @param {string} user.username - Username
+   * @param {string} user.password - Password
    * @param {object} [opts] - Options
    * @return {Promise}
    */
@@ -29,9 +29,9 @@ class PuppeteerEmailProvider {
   /**
    * Signs into an existing email account using this provider.
    *
-   * @param {object} user - User info for the account to create
-   * @param {string} username - Username
-   * @param {string} password - Password
+   * @param {object} user - User info for the account to sign into
+   * @param {string} user.username - Username
+   * @param {string} user.password - Password
    * @param {object} [opts] - Options
    * @return {Promise}
    */
