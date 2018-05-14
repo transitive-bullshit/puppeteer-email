@@ -10,8 +10,6 @@
 npm install --save puppeteer-email
 ```
 
-You'll also need to install at least one provider.
-
 ## Usage
 
 This example signs into an [Outlook](https://outlook.live.com) account, searches for a given query, and then parses and returns all emails returned for that query.
@@ -135,7 +133,7 @@ Returns an email session with the authenticated puppeteer browser.
     -   `opts.browser` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Puppeteer browser instance to use
     -   `opts.puppeteer` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Puppeteer [launch options](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions)
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;PuppeteerEmailSession>** 
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;PuppeteerEmailSession>**
 
 #### signin
 
@@ -155,13 +153,17 @@ Returns an email session with the authenticated puppeteer browser.
     -   `opts.browser` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Puppeteer browser instance to use
     -   `opts.puppeteer` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Puppeteer [launch options](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions)
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;PuppeteerEmailSession>** 
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;PuppeteerEmailSession>**
 
 ## Related
 
 -   [puppeteer-email-cli](packages/puppeteer-email-cli) - CLI for executing one-off email automation tasks.
 -   [puppeteer-email-session](https://github.com/transitive-bullshit/puppeteer-email/tree/master/packages/puppeteer-email-session) - Holds state for an authenticated puppeteer email session.
 -   [parse-email](https://github.com/transitive-bullshit/parse-email) - Parses mime-encoded email messages.
+
+## Disclaimer
+
+Using this softare to violate the terms and conditions of any third-party service is strictly against the intent of this software. By using this software, you are acknowledging this fact and absolving the author or any potential liability or wrongdoing it may cause. This software is meant for testing and experimental purposes only, so please act responsibly.
 
 ## License
 
