@@ -27,11 +27,11 @@ npm install --save puppeteer-email-session
     -   [getEmails](#getemails)
     -   [close](#close)
 
-### PuppeteerEmailSession
+### [PuppeteerEmailSession](https://github.com/transitive-bullshit/puppeteer-email/blob/d2ce2dbdb8ee7041c8fd447f3d23f302acf28966/packages/puppeteer-email-session/index.js#L16-L120)
 
 Holds state for an authenticated puppeteer email session.
 
-**Parameters**
+Type: `function (opts)`
 
 -   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Options
     -   `opts.user` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Authenticated user
@@ -40,71 +40,87 @@ Holds state for an authenticated puppeteer email session.
     -   `opts.browser` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Puppeteer Browser to use
     -   `opts.provider` **PuppeteerEmailProvider** Email provider to use
 
-#### username
+* * *
+
+#### [username](https://github.com/transitive-bullshit/puppeteer-email/blob/d2ce2dbdb8ee7041c8fd447f3d23f302acf28966/packages/puppeteer-email-session/index.js#L34-L34)
 
 Authenticated user's username.
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
-#### email
+* * *
+
+#### [email](https://github.com/transitive-bullshit/puppeteer-email/blob/d2ce2dbdb8ee7041c8fd447f3d23f302acf28966/packages/puppeteer-email-session/index.js#L41-L41)
 
 Authenticated user's email.
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
-#### provider
+* * *
+
+#### [provider](https://github.com/transitive-bullshit/puppeteer-email/blob/d2ce2dbdb8ee7041c8fd447f3d23f302acf28966/packages/puppeteer-email-session/index.js#L48-L48)
 
 Email provider to use.
 
 Type: PuppeteerEmailProvider
 
-#### browser
+* * *
+
+#### [browser](https://github.com/transitive-bullshit/puppeteer-email/blob/d2ce2dbdb8ee7041c8fd447f3d23f302acf28966/packages/puppeteer-email-session/index.js#L55-L55)
 
 Puppeteer Browser to use.
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
-#### isAuthenticated
+* * *
+
+#### [isAuthenticated](https://github.com/transitive-bullshit/puppeteer-email/blob/d2ce2dbdb8ee7041c8fd447f3d23f302acf28966/packages/puppeteer-email-session/index.js#L63-L63)
 
 Whether or not this session is currently authenticated with the given
 email provider.
 
 Type: [boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)
 
-#### signout
+* * *
+
+#### [signout](https://github.com/transitive-bullshit/puppeteer-email/blob/d2ce2dbdb8ee7041c8fd447f3d23f302acf28966/packages/puppeteer-email-session/index.js#L70-L77)
 
 Signs out of this session.
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+Type: `function (): Promise`
 
-#### sendEmail
+* * *
+
+#### [sendEmail](https://github.com/transitive-bullshit/puppeteer-email/blob/d2ce2dbdb8ee7041c8fd447f3d23f302acf28966/packages/puppeteer-email-session/index.js#L87-L93)
 
 Sends an email from this session.
 
-**Parameters**
+Type: `function (email, opts): Promise`
 
 -   `email` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** TODO
 -   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Options
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+* * *
 
-#### getEmails
+#### [getEmails](https://github.com/transitive-bullshit/puppeteer-email/blob/d2ce2dbdb8ee7041c8fd447f3d23f302acf28966/packages/puppeteer-email-session/index.js#L103-L109)
 
 Fetches emails from the inbox of this session's account.
 
-**Parameters**
+Type: `function (opts)`
 
 -   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Options
     -   `opts.query` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Search query to narrow down results
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>>** 
+* * *
 
-#### close
+#### [close](https://github.com/transitive-bullshit/puppeteer-email/blob/d2ce2dbdb8ee7041c8fd447f3d23f302acf28966/packages/puppeteer-email-session/index.js#L117-L119)
 
 Closes the underlying Puppeteer Browser instance, effectively ending this
 session.
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+Type: `function (): Promise`
+
+* * *
 
 ## Related
 
