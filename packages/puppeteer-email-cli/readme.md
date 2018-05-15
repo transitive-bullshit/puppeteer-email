@@ -13,7 +13,7 @@ npm install --save puppeteer-email-cli
 ## Usage
 
 ```bash
-  Usage: index [options] [command]
+  Usage: puppeteer-email [options] [command]
 
   Options:
 

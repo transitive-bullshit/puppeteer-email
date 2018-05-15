@@ -7269,14 +7269,16 @@ update-markdown-jsdoc@^1.0.2:
     node-compat-require "^1.0.3"
     read-pkg-up "^3.0.0"
 
-update-markdown-usage@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/update-markdown-usage/-/update-markdown-usage-1.0.0.tgz#158eb5693acbaf0a9a16060b1868e0f774ef93e1"
+update-markdown-usage@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/update-markdown-usage/-/update-markdown-usage-1.0.1.tgz#bdbd315dd7e2cf83e276f6c5d868a91975353247"
   dependencies:
     commander "^2.15.1"
+    execa "^0.10.0"
     get-stdin "^6.0.0"
     mdast-util-inject "^1.1.0"
     node-compat-require "^1.0.3"
+    read-pkg-up "^3.0.0"
     remark "^9.0.0"
 
 update-notifier@^2.3.0:
