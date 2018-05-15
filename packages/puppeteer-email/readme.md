@@ -78,17 +78,17 @@ See [parse-email](https://github.com/transitive-bullshit/parse-email) for detail
     -   [signup](#signup)
     -   [signin](#signin)
 
-### PuppeteerEmail
+### [PuppeteerEmail](https://github.com/transitive-bullshit/puppeteer-email/blob/f5e0b1eac196eb5665c862c6e2556b32c3ce6c0e/packages/puppeteer-email/index.js#L28-L131)
 
 Main entrypoint for authenticating and automating a given email provider.
 
-**Parameters**
+Type: `function (provider)`
 
 -   `provider` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | PuppeteerEmailProvider)** Name of built-in email provider or an
     email address belonging to a built-in email provider. May also be an instance of a
     custom PuppeteerEmailProvider.
 
-**Examples**
+Examples:
 
 ```javascript
 const client = new PuppeteerEmail('outlook')
@@ -103,13 +103,17 @@ const session = await client.signin({ email: 'test@outlook.com', password: 'xxx'
 await session.close()
 ```
 
-#### provider
+* * *
+
+#### [provider](https://github.com/transitive-bullshit/puppeteer-email/blob/f5e0b1eac196eb5665c862c6e2556b32c3ce6c0e/packages/puppeteer-email/index.js#L45-L45)
 
 Email provider to automate.
 
 Type: PuppeteerEmailProvider
 
-#### signup
+* * *
+
+#### [signup](https://github.com/transitive-bullshit/puppeteer-email/blob/f5e0b1eac196eb5665c862c6e2556b32c3ce6c0e/packages/puppeteer-email/index.js#L71-L88)
 
 Creates a new email account using the set email provider.
 
@@ -118,7 +122,7 @@ Any user information that isn't provided will be filled in using
 
 Returns an email session with the authenticated puppeteer browser.
 
-**Parameters**
+Type: `function (user, opts)`
 
 -   `user` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** User info for the account to create
     -   `user.username` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Username
@@ -133,9 +137,9 @@ Returns an email session with the authenticated puppeteer browser.
     -   `opts.browser` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Puppeteer browser instance to use
     -   `opts.puppeteer` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Puppeteer [launch options](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions)
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;PuppeteerEmailSession>**
+* * *
 
-#### signin
+#### [signin](https://github.com/transitive-bullshit/puppeteer-email/blob/f5e0b1eac196eb5665c862c6e2556b32c3ce6c0e/packages/puppeteer-email/index.js#L108-L130)
 
 Signs into an existing email account using the set email provider.
 
@@ -143,7 +147,7 @@ You must specify either `user.username` or `user.email`.
 
 Returns an email session with the authenticated puppeteer browser.
 
-**Parameters**
+Type: `function (user, opts)`
 
 -   `user` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** User info for the account to sign into
     -   `user.username` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Username (implies email)
@@ -153,7 +157,7 @@ Returns an email session with the authenticated puppeteer browser.
     -   `opts.browser` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Puppeteer browser instance to use
     -   `opts.puppeteer` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Puppeteer [launch options](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions)
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;PuppeteerEmailSession>**
+* * *
 
 ## Related
 
