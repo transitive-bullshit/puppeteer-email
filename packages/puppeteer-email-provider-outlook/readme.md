@@ -24,25 +24,31 @@ npm install --save puppeteer-email-provider-outlook
     -   [sendEmail](#sendemail)
     -   [getEmails](#getemails)
 
-### PuppeteerEmailProviderOutlook
+### [PuppeteerEmailProviderOutlook](https://github.com/transitive-bullshit/puppeteer-email/blob/a5e0c04002d628c370d4ed7dad0e5550c749ab3b/packages/puppeteer-email-provider-outlook/index.js#L19-L167)
 
-**Extends PuppeteerEmailProvider**
+**Extends: PuppeteerEmailProvider**
 
 Puppeteer email provider for [Outlook](https://outlook.live.com).
 
-#### name
+Type: `function ()`
+
+* * *
+
+#### [name](https://github.com/transitive-bullshit/puppeteer-email/blob/a5e0c04002d628c370d4ed7dad0e5550c749ab3b/packages/puppeteer-email-provider-outlook/index.js#L25-L27)
 
 Email provider to automate.
 
 Type: PuppeteerEmailProvider
 
-#### signup
+* * *
+
+#### [signup](https://github.com/transitive-bullshit/puppeteer-email/blob/a5e0c04002d628c370d4ed7dad0e5550c749ab3b/packages/puppeteer-email-provider-outlook/index.js#L49-L66)
 
 Creates a new email account.
 
 Returns an email session with the authenticated puppeteer browser.
 
-**Parameters**
+Type: `function (user, opts)`
 
 -   `user` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** User info for the account to create
     -   `user.username` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Username
@@ -56,9 +62,9 @@ Returns an email session with the authenticated puppeteer browser.
 -   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Options
     -   `opts.browser` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Puppeteer browser instance to use
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;PuppeteerEmailSession>** 
+* * *
 
-#### signin
+#### [signin](https://github.com/transitive-bullshit/puppeteer-email/blob/a5e0c04002d628c370d4ed7dad0e5550c749ab3b/packages/puppeteer-email-provider-outlook/index.js#L85-L112)
 
 Signs into an existing email account.
 
@@ -66,7 +72,7 @@ You must specify either `user.username` or `user.email`.
 
 Returns an email session with the authenticated puppeteer browser.
 
-**Parameters**
+Type: `function (user, opts)`
 
 -   `user` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** User info for the account to sign into
     -   `user.username` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Username (implies email)
@@ -75,41 +81,41 @@ Returns an email session with the authenticated puppeteer browser.
 -   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Options
     -   `opts.browser` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Puppeteer browser instance to use
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;PuppeteerEmailSession>** 
+* * *
 
-#### signout
+#### [signout](https://github.com/transitive-bullshit/puppeteer-email/blob/a5e0c04002d628c370d4ed7dad0e5550c749ab3b/packages/puppeteer-email-provider-outlook/index.js#L121-L127)
 
 Signs out of an authenticated session.
 
-**Parameters**
+Type: `function (session): Promise`
 
 -   `session` **PuppeteerEmailSession** 
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+* * *
 
-#### sendEmail
+#### [sendEmail](https://github.com/transitive-bullshit/puppeteer-email/blob/a5e0c04002d628c370d4ed7dad0e5550c749ab3b/packages/puppeteer-email-provider-outlook/index.js#L138-L147)
 
 Sends an email from an authenticated session.
 
-**Parameters**
+Type: `function (session, email, opts): Promise`
 
 -   `session` **PuppeteerEmailSession** 
 -   `email` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** TODO
 -   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Options (optional, default `{}`)
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+* * *
 
-#### getEmails
+#### [getEmails](https://github.com/transitive-bullshit/puppeteer-email/blob/a5e0c04002d628c370d4ed7dad0e5550c749ab3b/packages/puppeteer-email-provider-outlook/index.js#L158-L166)
 
 Fetches emails from the inbox of an authenticated session.
 
-**Parameters**
+Type: `function (session, opts)`
 
 -   `session` **PuppeteerEmailSession** 
 -   `opts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Options (optional, default `{}`)
     -   `opts.query` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Search query to narrow down results
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+* * *
 
 ## Related
 
