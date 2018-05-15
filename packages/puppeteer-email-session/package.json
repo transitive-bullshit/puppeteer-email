@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-email-session",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Holds state for an authenticated puppeteer email session.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
@@ -24,6 +24,6 @@
   },
   "dependencies": {
     "ow": "^0.3.0",
-    "puppeteer-email-provider": "^0.0.3"
+    "puppeteer-email-provider": "^0.0.4"
   }
 }
