@@ -1,7 +1,7 @@
 'use strict'
 
 /**
- * Abstract base class for pupeteer email providers.
+ * Abstract base class for puppeteer email providers.
  */
 class PuppeteerEmailProvider {
   /**

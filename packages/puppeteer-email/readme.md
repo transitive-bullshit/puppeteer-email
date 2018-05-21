@@ -161,13 +161,13 @@ Type: `function (user, opts)`
 
 ## Related
 
--   [puppeteer-email-cli](packages/puppeteer-email-cli) - CLI for executing one-off email automation tasks.
--   [puppeteer-email-session](https://github.com/transitive-bullshit/puppeteer-email/tree/master/packages/puppeteer-email-session) - Holds state for an authenticated puppeteer email session.
+-   [puppeteer-email-cli](../puppeteer-email-cli) - CLI for executing one-off email automation tasks.
+-   [puppeteer-email-session](../puppeteer-email-session) - Holds state for an authenticated puppeteer email session.
 -   [parse-email](https://github.com/transitive-bullshit/parse-email) - Parses mime-encoded email messages.
 
 ## Disclaimer
 
-Using this softare to violate the terms and conditions of any third-party service is strictly against the intent of this software. By using this software, you are acknowledging this fact and absolving the author or any potential liability or wrongdoing it may cause. This software is meant for testing and experimental purposes only, so please act responsibly.
+Using this software to violate the terms and conditions of any third-party service is strictly against the intent of this software. By using this software, you are acknowledging this fact and absolving the author or any potential liability or wrongdoing it may cause. This software is meant for testing and experimental purposes only, so please act responsibly.
 
 ## License
 

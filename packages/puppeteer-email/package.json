@@ -7,7 +7,7 @@
   "author": "Travis Fischer <travis@automagical.ai>",
   "license": "MIT",
   "scripts": {
-    "docs": "update-markdown-jsdoc ",
+    "docs": "update-markdown-jsdoc",
     "test": "ava -v && standard"
   },
   "engines": {
