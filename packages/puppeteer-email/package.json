@@ -6,6 +6,7 @@
   "repository": "transitive-bullshit/puppeteer-email",
   "author": "Travis Fischer <travis@automagical.ai>",
   "license": "MIT",
+  "reveal": true,
   "scripts": {
     "docs": "update-markdown-jsdoc",
     "test": "ava -v && standard"
@@ -23,8 +24,9 @@
     "update-markdown-jsdoc": "^1.0.2"
   },
   "dependencies": {
+    "delay": "^3.0.0",
     "faker": "^4.1.0",
-    "ow": "^0.3.0",
+    "ow": "^0.6.0",
     "puppeteer": "^1.4.0",
     "puppeteer-email-provider": "^0.0.5",
     "puppeteer-email-provider-outlook": "^0.0.7"

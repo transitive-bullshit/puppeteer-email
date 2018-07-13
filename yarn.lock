@@ -2226,6 +2226,10 @@ delay@^2.0.0:
   dependencies:
     p-defer "^1.0.0"
 
+delay@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/delay/-/delay-3.0.0.tgz#97fc5c21028e20616e822ab11838c648808534eb"
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
@@ -5267,6 +5271,10 @@ osenv@0, osenv@^0.1.4, osenv@^0.1.5, osenv@~0.1.4:
 ow@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/ow/-/ow-0.3.0.tgz#411079ba831edbbe7fc72fb0280dc25dfa39270b"
+
+ow@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ow/-/ow-0.6.0.tgz#1371352713192a8dd54ec13ab0f0f1464b58941f"
 
 p-defer@^1.0.0:
   version "1.0.0"

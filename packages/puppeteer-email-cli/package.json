@@ -6,6 +6,7 @@
   "repository": "transitive-bullshit/puppeteer-email-cli",
   "author": "Travis Fischer <travis@automagical.ai>",
   "license": "MIT",
+  "reveal": true,
   "bin": {
     "puppeteer-email": "index.js"
   },
