@@ -27,7 +27,7 @@
   "dependencies": {
     "delay": "^2.0.0",
     "faker": "^4.1.0",
-    "ow": "^0.3.0",
+    "ow": "^0.6.0",
     "p-map": "^1.2.0",
     "parse-email": "^1.0.0",
     "puppeteer-email-provider": "^0.0.5",

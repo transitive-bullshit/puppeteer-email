@@ -28,8 +28,8 @@
     "update-markdown-usage": "^1.0.1"
   },
   "dependencies": {
-    "commander": "^2.15.1",
-    "node-compat-require": "^1.0.3",
+    "commander": "^2.16.0",
+    "node-compat-require": "^1.0.5",
     "puppeteer-email": "^0.0.7"
   }
 }

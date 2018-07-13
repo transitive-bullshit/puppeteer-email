@@ -47,11 +47,11 @@ class PuppeteerEmailProviderOutlook extends PuppeteerEmailProvider {
    * @return {Promise<PuppeteerEmailSession>}
    */
   async signup (user, opts) {
-    ow(user, ow.object.plain.nonEmpty)
-    ow(user.username, ow.string.nonEmpty)
-    ow(user.password, ow.string.nonEmpty)
-    ow(opts, ow.object.nonEmpty)
-    ow(opts.browser, ow.object.nonEmpty)
+    ow(user, ow.object.plain.nonEmpty.label('user'))
+    ow(user.username, ow.string.nonEmpty.label('user.username'))
+    ow(user.password, ow.string.nonEmpty.label('user.password'))
+    ow(opts, ow.object.nonEmpty.label('opts'))
+    ow(opts.browser, ow.object.nonEmpty.label('browser'))
 
     await signup(user, opts)
 
@@ -83,8 +83,8 @@ class PuppeteerEmailProviderOutlook extends PuppeteerEmailProvider {
    * @return {Promise<PuppeteerEmailSession>}
    */
   async signin (user, opts) {
-    ow(user, ow.object.plain.nonEmpty)
-    ow(user.password, ow.string.nonEmpty)
+    ow(user, ow.object.plain.nonEmpty.label('user'))
+    ow(user.password, ow.string.nonEmpty.label('user.password'))
 
     if (user.username) {
       ow(user.username, ow.string.nonEmpty)
