@@ -71,6 +71,22 @@ class PuppeteerEmail {
   async signup (user, opts = { }) {
     if (!user) user = { }
 
+    if (!user.username) {
+      if (user.email) {
+        ow(user.email, ow.string.nonEmpty.label('user.email'))
+        user.username = user.email.split('@')[0].trim()
+      } else {
+        user.username = faker.internet.userName()
+      }
+    }
+
+    if (!user.password) {
+      user.password = faker.internet.password()
+    }
+
+    ow(user.username, ow.string.nonEmpty.label('user.username'))
+    ow(user.password, ow.string.nonEmpty.label('user.password'))
+
     user.firstName = user.firstName || faker.name.firstName()
     user.lastName = user.lastName || faker.name.lastName()
     user.password = user.password || faker.internet.password()

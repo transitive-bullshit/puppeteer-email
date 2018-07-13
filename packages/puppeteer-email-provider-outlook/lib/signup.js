@@ -6,6 +6,7 @@ const tempy = require('tempy')
 
 module.exports = async (user, opts) => {
   const {
+    captchaSolver,
     browser
   } = opts
 
@@ -85,19 +86,36 @@ module.exports = async (user, opts) => {
   if (await page.$('#hipTemplateContainer')) { // captcha
     await page.waitFor('#hipTemplateContainer img', { visible: true })
 
-    const $img = await page.$('#hipTemplateContainer img')
-    const captchaPath = tempy.file({ extension: 'png' })
-    await $img.screenshot({
-      path: captchaPath
-    })
+    if (captchaSolver) {
+      const $img = await page.$('#hipTemplateContainer img')
+      const captchaPath = tempy.file({ extension: 'png' })
+      await $img.screenshot({
+        path: captchaPath
+      })
 
-    console.log({ captchaPath })
+      console.log({ captchaPath })
 
-    // TODO: actually solve captcha...
-    const captcha = 'test'
-    await page.type('#hipTemplateContainer input', captcha, { delay: 40 })
+      const taskId = await captchaSolver.createTask({
+        type: 'image-to-text',
+        image: captchaPath
+      })
+      console.log(`captcha task id: ${taskId}`)
+      await delay(5000)
 
-    // TODO: verify this is the correct button
+      const result = await captchaSolver.getTaskResult(taskId, {
+        retries: opts.retries,
+        timeout: opts.timeout,
+        minTimeout: 5000,
+        onFailedAttempt: (err) => {
+          console.log(`Error getting captcha task result #${err.attemptNumber} failed. Retrying ${err.attemptsLeft} times left...`)
+        }
+      })
+      console.log(`captcha task result: ${JSON.stringify(result, null, 2)}`)
+
+      const solution = result && result.solution && result.solution.text
+      await page.type('#hipTemplateContainer input', solution, { delay: 40 })
+    }
+
     // TODO: handle incorrect captcha result
 
     await Promise.all([
