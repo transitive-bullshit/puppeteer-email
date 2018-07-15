@@ -36,7 +36,7 @@ module.exports = (argv) => {
           ? new CaptchaSolver(program.captchaProvider, { key: program.captchaKey })
           : null
         const smsNumberVerifier = program.smsProvider
-          ? async () => new SMSNumberVerifier({ provider: program.smsProvider })
+          ? new SMSNumberVerifier(program.smsProvider)
           : null
 
         const user = {

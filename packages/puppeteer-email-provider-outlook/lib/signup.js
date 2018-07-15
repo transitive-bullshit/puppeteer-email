@@ -103,14 +103,32 @@ module.exports = async (user, opts) => {
 
       // sms validation
       if (smsNumberVerifier) {
-        const number = await smsNumberVerifier.getNumber()
+        const blacklist = new Set()
         const service = 'microsoft'
+        let number
 
-        await page.type('#wlspispHipChallengeContainer input[type=text]', number, { delay: 15 })
-        await delay(200)
-        await page.click('#wlspispHipControlButtonsContainer a[title="Send SMS code"]', { delay: 28 })
+        do {
+          number = await smsNumberVerifier.getNumber({ blacklist })
 
-        await page.waitFor('#wlspispHipSolutionContainer input[type=text]', { visible: true })
+          await page.type('#wlspispHipChallengeContainer input[type=text]', number, { delay: 15 })
+          await delay(200)
+          await page.click('#wlspispHipControlButtonsContainer a[title="Send SMS code"]', { delay: 28 })
+
+          let error = null
+          await Promise.race([
+            page.waitFor('#wlspispHipSolutionContainer input[type=text]', { visible: true }),
+            page.waitFor('.alert-error[aria-hidden=false]', { visible: true })
+              .then(() => page.$eval('.alert-error[aria-hidden=false]', (e) => e.innerText))
+              .then((e) => { error = e })
+          ])
+
+          if (error) {
+            console.warn('sms number error:', error.trim())
+          } else {
+            break
+          }
+        } while (true)
+
         const authCodes = await smsNumberVerifier.getAuthCodes({ number, service })
         console.log('sms request', service, number, authCodes)
 
@@ -120,18 +138,22 @@ module.exports = async (user, opts) => {
           for (let i = 0; i < authCodes.length; ++i) {
             await page.type('#wlspispHipSolutionContainer input[type=text]', { visible: true })
 
-            let isError = false
+            let error = false
             await Promise.all([
               page.click('#iSignupAction', { delay: 9 }),
               Promise.race([
                 page.waitForNavigation({ timeout: 0 })
                   .then(() => { waitForNavigation = false }),
-                page.waitFor('.alert.alert-error', { visible: true })
-                  .then(() => { isError = true })
+                // page.waitFor('.alert.alert-error', { visible: true })
+                page.waitFor('.alert-error[aria-hidden=false]', { visible: true })
+                  .then(() => page.$eval('.alert-error[aria-hidden=false]', (e) => e.innerText))
+                  .then((e) => { error = e })
               ])
             ])
 
-            if (!isError) {
+            if (error) {
+              console.warn('sms code error', error.trim())
+            } else {
               break
             }
           }
@@ -177,20 +199,21 @@ module.exports = async (user, opts) => {
 
           // TODO: handle incorrect captcha result
 
-          let isError = false
+          let error = false
           await Promise.all([
             page.click('#iSignupAction', { delay: 9 }),
             Promise.race([
               page.waitForNavigation({ timeout: 0 })
                 .then(() => { waitForNavigation = false }),
-              page.waitFor('.alert-error[aria-hidden=false]')
-                .then(() => { isError = true }),
+              page.waitFor('.alert-error[aria-hidden=false]', { visible: true })
+                .then(() => page.$eval('.alert-error[aria-hidden=false]', (e) => e.innerText))
+                .then((e) => { error = e }),
               page.waitFor('#wlspispHipChallengeContainer', { visible: true })
             ])
           ])
 
-          if (isError) {
-            console.log('captcha solver failed')
+          if (error) {
+            console.warn('captcha solver error:', error)
           } else {
             break
           }
