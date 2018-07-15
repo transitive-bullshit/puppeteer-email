@@ -33,6 +33,7 @@ module.exports = async (user, opts) => {
     // TODO: there is an issue here where if one username fails, the next will
     // always also fail
     if (error) {
+      await delay(1000)
       await page.focus('#MemberName')
       for (let i = 0; i < user.username.length + 8; ++i) {
         await page.keyboard.press('Backspace')
@@ -109,6 +110,10 @@ module.exports = async (user, opts) => {
 
         do {
           number = await smsNumberVerifier.getNumber({ blacklist })
+          if (!number) {
+            await waitForManualInput('unable to find valid sms number')
+            break
+          }
 
           await page.type('#wlspispHipChallengeContainer input[type=text]', number, { delay: 15 })
           await delay(200)
@@ -119,15 +124,27 @@ module.exports = async (user, opts) => {
             page.waitFor('#wlspispHipSolutionContainer input[type=text]', { visible: true }),
             page.waitFor('.alert-error[aria-hidden=false]', { visible: true })
               .then(() => page.$eval('.alert-error[aria-hidden=false]', (e) => e.innerText))
-              .then((e) => { error = e })
+              .then((e) => { error = e.trim() })
           ])
 
           if (error) {
-            console.warn('sms number error:', error.trim())
+            console.warn(`sms number error "${number}":`, error)
+            blacklist.add(number)
+
+            await delay(1000)
+            await page.focus('#wlspispHipChallengeContainer input[type=text]')
+            for (let i = 0; i < number.length + 8; ++i) {
+              await page.keyboard.press('Backspace')
+            }
+            await delay(1000)
           } else {
             break
           }
         } while (true)
+
+        if (!waitForNavigation) {
+          break
+        }
 
         const authCodes = await smsNumberVerifier.getAuthCodes({ number, service })
         console.log('sms request', service, number, authCodes)
@@ -136,7 +153,8 @@ module.exports = async (user, opts) => {
           // TODO: likely won't work for multiple auth codes found because error will still be
           // present after first failure
           for (let i = 0; i < authCodes.length; ++i) {
-            await page.type('#wlspispHipSolutionContainer input[type=text]', { visible: true })
+            const code = authCodes[i]
+            await page.type('#wlspispHipSolutionContainer input[type=text]', code, { visible: true })
 
             let error = false
             await Promise.all([
@@ -147,12 +165,19 @@ module.exports = async (user, opts) => {
                 // page.waitFor('.alert.alert-error', { visible: true })
                 page.waitFor('.alert-error[aria-hidden=false]', { visible: true })
                   .then(() => page.$eval('.alert-error[aria-hidden=false]', (e) => e.innerText))
-                  .then((e) => { error = e })
+                  .then((e) => { error = e.trim() })
               ])
             ])
 
             if (error) {
-              console.warn('sms code error', error.trim())
+              console.warn('sms code error', { number, code }, error)
+
+              await delay(1000)
+              await page.focus('#wlspispHipSolutionContainer input[type=text]')
+              for (let i = 0; i < code.length + 8; ++i) {
+                await page.keyboard.press('Backspace')
+              }
+              await delay(1000)
             } else {
               break
             }
@@ -207,13 +232,13 @@ module.exports = async (user, opts) => {
                 .then(() => { waitForNavigation = false }),
               page.waitFor('.alert-error[aria-hidden=false]', { visible: true })
                 .then(() => page.$eval('.alert-error[aria-hidden=false]', (e) => e.innerText))
-                .then((e) => { error = e }),
+                .then((e) => { error = e.trim() }),
               page.waitFor('#wlspispHipChallengeContainer', { visible: true })
             ])
           ])
 
           if (error) {
-            console.warn('captcha solver error:', error)
+            console.warn('captcha solver error:', { solution }, error)
           } else {
             break
           }

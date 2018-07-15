@@ -39,6 +39,13 @@ module.exports = (argv) => {
           ? new SMSNumberVerifier(program.smsProvider)
           : null
 
+        /*
+        const number = '17204491791' // await smsNumberVerifier.getNumber()
+        console.log(number)
+        const codes = await smsNumberVerifier.getAuthCodes({ number, service: 'microsoft', timeout: 600000 })
+        console.log(codes)
+        */
+
         const user = {
           username: program.username,
           password: program.password,
@@ -60,10 +67,14 @@ module.exports = (argv) => {
           }
         })
 
-        await session.close()
-
         user.email = session.email
         console.log(JSON.stringify(user, null, 2))
+
+        await session.close()
+
+        if (smsNumberVerifier && smsNumberVerifier.provider.close) {
+          await smsNumberVerifier.provider.close()
+        }
       } catch (err) {
         console.error(err)
         process.exit(1)
