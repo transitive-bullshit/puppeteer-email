@@ -28,8 +28,11 @@
     "update-markdown-usage": "^1.0.1"
   },
   "dependencies": {
+    "captcha-solver": "^0.0.6",
     "commander": "^2.16.0",
+    "dotenv": "^6.0.0",
     "node-compat-require": "^1.0.5",
-    "puppeteer-email": "^0.0.7"
+    "puppeteer-email": "^0.0.7",
+    "sms-number-verifier": "^0.1.1"
   }
 }

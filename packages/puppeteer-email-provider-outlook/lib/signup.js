@@ -7,6 +7,7 @@ const tempy = require('tempy')
 module.exports = async (user, opts) => {
   const {
     captchaSolver,
+    smsNumberVerifier,
     browser
   } = opts
 
@@ -37,7 +38,8 @@ module.exports = async (user, opts) => {
         await page.keyboard.press('Backspace')
       }
 
-      user.username = faker.internet.userName()
+      await delay(1000)
+      user.username = faker.internet.userName() + (Math.random() * 10000 | 0)
     }
   } while (error)
 
@@ -78,54 +80,124 @@ module.exports = async (user, opts) => {
   await delay(220)
   await page.click('#iSignupAction', { delay: 8 })
 
-  // captcha or sms validation
-  // -------------------------
+  // captcha and/or sms validation
+  // -----------------------------
 
   await delay(1000)
+  let waitForNavigation = true
 
-  if (await page.$('#hipTemplateContainer')) { // captcha
-    await page.waitFor('#hipTemplateContainer img', { visible: true })
-
-    if (captchaSolver) {
-      const $img = await page.$('#hipTemplateContainer img')
-      const captchaPath = tempy.file({ extension: 'png' })
-      await $img.screenshot({
-        path: captchaPath
-      })
-
-      console.log({ captchaPath })
-
-      const taskId = await captchaSolver.createTask({
-        type: 'image-to-text',
-        image: captchaPath
-      })
-      console.log(`captcha task id: ${taskId}`)
-      await delay(5000)
-
-      const result = await captchaSolver.getTaskResult(taskId, {
-        retries: opts.retries,
-        timeout: opts.timeout,
-        minTimeout: 5000,
-        onFailedAttempt: (err) => {
-          console.log(`Error getting captcha task result #${err.attemptNumber} failed. Retrying ${err.attemptsLeft} times left...`)
-        }
-      })
-      console.log(`captcha task result: ${JSON.stringify(result, null, 2)}`)
-
-      const solution = result && result.solution && result.solution.text
-      await page.type('#hipTemplateContainer input', solution, { delay: 40 })
-    }
-
-    // TODO: handle incorrect captcha result
-
-    await Promise.all([
-      page.waitForNavigation({ timeout: 0 }),
-      page.click('#iSignupAction', { delay: 9 })
-    ])
-  } else {
-    // TODO: handle case of sms validation
-    await page.waitForNavigation({ timeout: 0 })
+  const waitForManualInput = async (msg) => {
+    console.warn(msg)
+    console.warn('waiting for manual input...')
+    await page.waitForNavigation({ timeout: 200000 })
+    waitForNavigation = false
   }
+
+  // TODO: is it possible to go from sms verification to captcha or will it
+  // always be captcha first?
+
+  do {
+    // captcha validation
+    if (await page.$('#wlspispHipChallengeContainer')) {
+      console.log('SMS NUMBER VALIDATION')
+
+      // sms validation
+      if (smsNumberVerifier) {
+        const smsRequest = await smsNumberVerifier()
+        const smsService = 'microsoft'
+
+        await page.type('#wlspispHipChallengeContainer input[type=text]', smsRequest.number, { delay: 15 })
+        await delay(200)
+        await page.click('#wlspispHipControlButtonsContainer a[title="Send SMS code"]', { delay: 28 })
+
+        await page.waitFor('#wlspispHipSolutionContainer input[type=text]', { visible: true })
+        await delay(10000)
+        const authCodes = await smsRequest.getAuthCodes(smsService)
+        console.log('sms request', smsService, smsRequest.number, authCodes)
+
+        if (authCodes.length) {
+          // TODO: likely won't work for multiple auth codes found because error will still be
+          // present after first failure
+          for (let i = 0; i < authCodes.length; ++i) {
+            await page.type('#wlspispHipSolutionContainer input[type=text]', { visible: true })
+
+            let isError = false
+            await Promise.all([
+              page.click('#iSignupAction', { delay: 9 }),
+              Promise.race([
+                page.waitForNavigation({ timeout: 0 })
+                  .then(() => { waitForNavigation = false }),
+                page.waitFor('.alert.alert-error', { visible: true })
+                  .then(() => { isError = true })
+              ])
+            ])
+
+            if (!isError) {
+              break
+            }
+          }
+        }
+
+        if (waitForNavigation) {
+          await waitForManualInput('sms number verification failed')
+        }
+      } else {
+        await waitForManualInput('sms number verification required')
+      }
+    } else if (await page.$('#hipTemplateContainer')) {
+      console.log('CAPTCHA CHALLENGE')
+      await page.waitFor('#hipTemplateContainer img[aria-label="Visual Challenge"]', { visible: true })
+
+      if (captchaSolver) {
+        const $img = await page.$('#hipTemplateContainer img[aria-label="Visual Challenge"]')
+        const captchaPath = tempy.file({ extension: 'png' })
+        await $img.screenshot({ path: captchaPath })
+
+        console.log({ captchaPath })
+
+        const taskId = await captchaSolver.createTask({
+          type: 'image-to-text',
+          image: captchaPath
+        })
+        console.log(`captcha task id: ${taskId}`)
+        await delay(10000)
+
+        const result = await captchaSolver.getTaskResult(taskId, {
+          timeout: 60000,
+          minTimeout: 8000,
+          onFailedAttempt: (err) => {
+            console.log(`Error getting captcha task result #${err.attemptNumber} failed. Retrying ${err.attemptsLeft} times left...`)
+          }
+        })
+        console.log(`captcha task result: ${JSON.stringify(result, null, 2)}`)
+
+        const solution = result && result.solution && result.solution.text
+        await page.type('#hipTemplateContainer input', solution, { delay: 40 })
+
+        // TODO: handle incorrect captcha result
+
+        let isError = false
+        await Promise.all([
+          page.click('#iSignupAction', { delay: 9 }),
+          Promise.race([
+            page.waitForNavigation({ timeout: 0 })
+              .then(() => { waitForNavigation = false }),
+            page.waitFor('.alert.alert-error', { visible: true })
+              .then(() => { isError = true }),
+            page.waitFor('#wlspispHipChallengeContainer', { visible: true })
+          ])
+        ])
+
+        if (isError) {
+          await waitForManualInput('captcha solver failed')
+        }
+      } else {
+        await waitForManualInput('captcha solver required')
+      }
+    } else {
+      await waitForManualInput('waiting for navigation')
+    }
+  } while (waitForNavigation)
 
   // main account page
   // -----------------

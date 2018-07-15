@@ -32,7 +32,7 @@ class PuppeteerEmail {
       : (provider.indexOf('@') >= 0)
         ? providers.getProviderByEmail(provider)
         : providers.getProviderByName(provider)
-    ow(p, ow.object.instanceOf(PuppeteerEmailProvider))
+    ow(p, ow.object.instanceOf(PuppeteerEmailProvider).label('provider'))
 
     this._provider = p
   }
@@ -76,7 +76,7 @@ class PuppeteerEmail {
         ow(user.email, ow.string.nonEmpty.label('user.email'))
         user.username = user.email.split('@')[0].trim()
       } else {
-        user.username = faker.internet.userName()
+        user.username = faker.internet.userName() + (Math.random() * 10000 | 0)
       }
     }
 
@@ -93,7 +93,7 @@ class PuppeteerEmail {
     user.birthday = user.birthday || { }
     user.birthday.month = user.birthday.month || '' + (random(1, 12) | 0)
     user.birthday.day = user.birthday.day || '' + (random(1, 30) | 0)
-    user.birthday.year = user.birthday.year || '' + (random(1960, 1997) | 0)
+    user.birthday.year = user.birthday.year || '' + (random(1960, 1992) | 0)
 
     const browser = opts.browser || await puppeteer.launch(opts.puppeteer)
 
