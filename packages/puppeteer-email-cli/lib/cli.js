@@ -7,7 +7,7 @@ const program = require('commander')
 
 const PuppeteerEmail = require('puppeteer-email')
 const CaptchaSolver = require('captcha-solver')
-const createSMSNumberVerifier = require('sms-number-verifier')
+const SMSNumberVerifier = require('sms-number-verifier')
 
 const { version } = require('../package')
 
@@ -22,7 +22,7 @@ module.exports = (argv) => {
     .option('-s, --slow-mo <timeout>', '(puppeteer) slows down operations by the given ms', parseInt, 0)
     .option('-c, --captchaProvider <string>', 'API key for captcha provider', /^(anti-captcha)$/, 'anti-captcha')
     .option('-k, --captchaKey <string>', 'Captcha solver provider')
-    .option('-s, --smsProvider <string>', 'SMS number verifier provider', 'smsreceivefree')
+    .option('-s, --smsProvider <string>', 'SMS number verifier provider', 'plivo')
 
   program
     .command('signup')
@@ -36,7 +36,7 @@ module.exports = (argv) => {
           ? new CaptchaSolver(program.captchaProvider, { key: program.captchaKey })
           : null
         const smsNumberVerifier = program.smsProvider
-          ? async () => createSMSNumberVerifier({ provider: program.smsProvider })
+          ? async () => new SMSNumberVerifier({ provider: program.smsProvider })
           : null
 
         const user = {

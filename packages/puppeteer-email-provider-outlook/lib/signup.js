@@ -103,17 +103,16 @@ module.exports = async (user, opts) => {
 
       // sms validation
       if (smsNumberVerifier) {
-        const smsRequest = await smsNumberVerifier()
-        const smsService = 'microsoft'
+        const number = await smsNumberVerifier.getNumber()
+        const service = 'microsoft'
 
-        await page.type('#wlspispHipChallengeContainer input[type=text]', smsRequest.number, { delay: 15 })
+        await page.type('#wlspispHipChallengeContainer input[type=text]', number, { delay: 15 })
         await delay(200)
         await page.click('#wlspispHipControlButtonsContainer a[title="Send SMS code"]', { delay: 28 })
 
         await page.waitFor('#wlspispHipSolutionContainer input[type=text]', { visible: true })
-        await delay(10000)
-        const authCodes = await smsRequest.getAuthCodes(smsService)
-        console.log('sms request', smsService, smsRequest.number, authCodes)
+        const authCodes = await smsNumberVerifier.getAuthCodes({ number, service })
+        console.log('sms request', service, number, authCodes)
 
         if (authCodes.length) {
           // TODO: likely won't work for multiple auth codes found because error will still be
@@ -146,51 +145,56 @@ module.exports = async (user, opts) => {
       }
     } else if (await page.$('#hipTemplateContainer')) {
       console.log('CAPTCHA CHALLENGE')
-      await page.waitFor('#hipTemplateContainer img[aria-label="Visual Challenge"]', { visible: true })
 
       if (captchaSolver) {
-        const $img = await page.$('#hipTemplateContainer img[aria-label="Visual Challenge"]')
-        const captchaPath = tempy.file({ extension: 'png' })
-        await $img.screenshot({ path: captchaPath })
+        do {
+          await page.waitFor('#hipTemplateContainer img[aria-label="Visual Challenge"]', { visible: true })
 
-        console.log({ captchaPath })
+          const $img = await page.$('#hipTemplateContainer img[aria-label="Visual Challenge"]')
+          const captchaPath = tempy.file({ extension: 'png' })
+          await $img.screenshot({ path: captchaPath })
 
-        const taskId = await captchaSolver.createTask({
-          type: 'image-to-text',
-          image: captchaPath
-        })
-        console.log(`captcha task id: ${taskId}`)
-        await delay(10000)
+          console.log({ captchaPath })
 
-        const result = await captchaSolver.getTaskResult(taskId, {
-          timeout: 60000,
-          minTimeout: 8000,
-          onFailedAttempt: (err) => {
-            console.log(`Error getting captcha task result #${err.attemptNumber} failed. Retrying ${err.attemptsLeft} times left...`)
-          }
-        })
-        console.log(`captcha task result: ${JSON.stringify(result, null, 2)}`)
+          const taskId = await captchaSolver.createTask({
+            type: 'image-to-text',
+            image: captchaPath
+          })
+          console.log(`captcha task id: ${taskId}`)
+          await delay(10000)
 
-        const solution = result && result.solution && result.solution.text
-        await page.type('#hipTemplateContainer input', solution, { delay: 40 })
+          const result = await captchaSolver.getTaskResult(taskId, {
+            timeout: 60000,
+            minTimeout: 8000,
+            onFailedAttempt: (err) => {
+              console.log(`Error getting captcha task result #${err.attemptNumber} failed. Retrying ${err.attemptsLeft} times left...`)
+            }
+          })
+          console.log(`captcha task result: ${JSON.stringify(result, null, 2)}`)
 
-        // TODO: handle incorrect captcha result
+          const solution = result && result.solution && result.solution.text
+          await page.type('#hipTemplateContainer input', solution, { delay: 40 })
 
-        let isError = false
-        await Promise.all([
-          page.click('#iSignupAction', { delay: 9 }),
-          Promise.race([
-            page.waitForNavigation({ timeout: 0 })
-              .then(() => { waitForNavigation = false }),
-            page.waitFor('.alert.alert-error', { visible: true })
-              .then(() => { isError = true }),
-            page.waitFor('#wlspispHipChallengeContainer', { visible: true })
+          // TODO: handle incorrect captcha result
+
+          let isError = false
+          await Promise.all([
+            page.click('#iSignupAction', { delay: 9 }),
+            Promise.race([
+              page.waitForNavigation({ timeout: 0 })
+                .then(() => { waitForNavigation = false }),
+              page.waitFor('.alert-error[aria-hidden=false]')
+                .then(() => { isError = true }),
+              page.waitFor('#wlspispHipChallengeContainer', { visible: true })
+            ])
           ])
-        ])
 
-        if (isError) {
-          await waitForManualInput('captcha solver failed')
-        }
+          if (isError) {
+            console.log('captcha solver failed')
+          } else {
+            break
+          }
+        } while (true)
       } else {
         await waitForManualInput('captcha solver required')
       }
