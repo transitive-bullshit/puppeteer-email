@@ -98,7 +98,6 @@ module.exports = async (user, opts) => {
   // always be captcha first?
 
   do {
-    // captcha validation
     if (await page.$('#wlspispHipChallengeContainer')) {
       console.log('SMS NUMBER VALIDATION')
 
