@@ -22,7 +22,7 @@ module.exports = (argv) => {
     .option('-s, --slow-mo <timeout>', '(puppeteer) slows down operations by the given ms', parseInt, 0)
     .option('-c, --captchaProvider <string>', 'API key for captcha provider', /^(anti-captcha)$/, 'anti-captcha')
     .option('-k, --captchaKey <string>', 'Captcha solver provider')
-    .option('-s, --smsProvider <string>', 'SMS number verifier provider', 'plivo')
+    .option('-s, --smsProvider <string>', 'SMS number verifier provider', 'getsmscode')
 
   program
     .command('signup')

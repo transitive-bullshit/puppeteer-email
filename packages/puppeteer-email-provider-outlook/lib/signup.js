@@ -108,11 +108,23 @@ module.exports = async (user, opts) => {
         const service = 'microsoft'
         let number
 
+        // TODO: TEMP
+        // await waitForManualInput('sms number verification required')
+        // break
+
         do {
-          number = await smsNumberVerifier.getNumber({ blacklist })
-          if (!number) {
-            await waitForManualInput('unable to find valid sms number')
-            break
+          number = await smsNumberVerifier.getNumber({ service, blacklist })
+          if (!number) break // TODO
+
+          const info = smsNumberVerifier.getNumberInfo(number)
+          if (!info) break // TODO
+
+          // select country code
+          await page.select('#wlspispHipChallengeContainer select', info.iso.toUpperCase())
+
+          // ignore country code prefix
+          if (number.startsWith(info.code)) {
+            number = number.slice(info.code.length)
           }
 
           await page.type('#wlspispHipChallengeContainer input[type=text]', number, { delay: 15 })
@@ -121,7 +133,7 @@ module.exports = async (user, opts) => {
 
           let error = null
           await Promise.race([
-            page.waitFor('#wlspispHipSolutionContainer input[type=text]', { visible: true }),
+            page.waitFor('#wlspispHipChallengeContainer input[type=text]', { visible: true }),
             page.waitFor('.alert-error[aria-hidden=false]', { visible: true })
               .then(() => page.$eval('.alert-error[aria-hidden=false]', (e) => e.innerText))
               .then((e) => { error = e.trim() })
