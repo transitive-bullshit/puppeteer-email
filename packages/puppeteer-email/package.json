@@ -29,6 +29,7 @@
     "ow": "^0.6.0",
     "puppeteer": "^1.4.0",
     "puppeteer-email-provider": "^0.0.5",
-    "puppeteer-email-provider-outlook": "^0.0.7"
+    "puppeteer-email-provider-outlook": "^0.0.7",
+    "puppeteer-email-provider-yahoo": "^0.0.1"
   }
 }

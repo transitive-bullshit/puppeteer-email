@@ -17,10 +17,10 @@ module.exports = (argv) => {
     .option('-u, --username <username>', 'email account username')
     .option('-p, --password <password>', 'email account password')
     .option('-e, --email <email>', 'email account address (overrides username and provider)')
-    .option('-P, --provider <provider>', 'email provider', /^(outlook)$/, 'outlook')
+    .option('-P, --provider <provider>', 'email provider', /^(outlook|yahoo)$/i, 'outlook')
     .option('-H, --no-headless', '(puppeteer) disable headless mode')
     .option('-s, --slow-mo <timeout>', '(puppeteer) slows down operations by the given ms', parseInt, 0)
-    .option('-c, --captchaProvider <string>', 'API key for captcha provider', /^(anti-captcha)$/, 'anti-captcha')
+    .option('-c, --captchaProvider <string>', 'API key for captcha provider', /^(anti-captcha)$/i, 'anti-captcha')
     .option('-k, --captchaKey <string>', 'Captcha solver provider')
     .option('-s, --smsProvider <string>', 'SMS number verifier provider', 'getsmscode')
 

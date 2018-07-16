@@ -30,23 +30,52 @@ module.exports = async (user, opts) => {
     throw new Error('sms validation required')
   }
 
+  let attempts = 0
   let service = 'yahoo'
-  let number = await smsNumberVerifier.getNumber({ service })
-  if (!number) throw new Error() // TODO
+  let number
 
-  const info = smsNumberVerifier.getNumberInfo(number)
-  if (!info) throw new Error() // TODO
+  do {
+    number = await smsNumberVerifier.getNumber({ service })
+    if (!number) throw new Error() // TODO
 
-  // select country code
-  await page.select('select[name=shortCountryCode]', info.iso.toUpperCase())
+    const info = smsNumberVerifier.getNumberInfo(number)
+    if (!info) throw new Error() // TODO
 
-  // ignore country code prefix
-  if (number.startsWith(info.code)) {
-    number = number.slice(info.code.length)
-  }
+    // select country code
+    await page.select('select[name=shortCountryCode]', info.iso.toUpperCase())
 
-  await page.type('input[name=phone]', number, { delay: 13 })
-  await delay(150)
+    // ignore country code prefix
+    if (number.startsWith(info.code)) {
+      number = number.slice(info.code.length)
+    }
+
+    await page.type('input[name=phone]', number, { delay: 13 })
+
+    let error = null
+    await Promise.race([
+      delay(1000),
+      page.waitFor('#reg-error-phone', { visible: true })
+        .then(() => page.$eval('#reg-error-phone', (e) => e.innerText))
+        .then((e) => { error = e.trim() })
+    ])
+
+    if (error) {
+      ++attempts
+      console.warn(`phone number error "${number}" (${attempts} attempts):`, error)
+
+      if (smsNumberVerifier.provider.addNumberToBlacklist) {
+        await smsNumberVerifier.provider.addNumberToBlacklist({ service, number })
+      }
+
+      if (++attempts > 3) {
+        throw new Error(`phone number error: ${error}`)
+      }
+
+      await delay(5000)
+    } else {
+      break
+    }
+  } while (true)
 
   // birth date
   // ----------
@@ -116,7 +145,7 @@ module.exports = async (user, opts) => {
     }
   }
 
-  await page.waitFor('.mail-button-wait button[type=submit]')
+  await page.waitFor('.mail-button-wait button[type=submit]', { visible: true })
   await Promise.all([
     page.click('.mail-button-wait button[type=submit]', { delay: 9 }),
     page.waitForNavigation()
