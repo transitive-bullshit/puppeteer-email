@@ -1,0 +1,36 @@
+{
+  "name": "puppeteer-email-provider-yahoo",
+  "version": "0.0.0",
+  "description": "Puppeteer email provider for Yahoo.",
+  "main": "index.js",
+  "repository": "transitive-bullshit/puppeteer-email",
+  "author": "Travis Fischer <travis@automagical.ai>",
+  "license": "MIT",
+  "scripts": {
+    "docs": "update-markdown-jsdoc",
+    "test": "standard"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "keywords": [
+    "puppeteer",
+    "email",
+    "yahoo"
+  ],
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "standard": "^11.0.0",
+    "update-markdown-jsdoc": "^1.0.2"
+  },
+  "dependencies": {
+    "delay": "^2.0.0",
+    "faker": "^4.1.0",
+    "ow": "^0.6.0",
+    "p-map": "^1.2.0",
+    "parse-email": "^1.0.0",
+    "puppeteer-email-provider": "^0.0.5",
+    "puppeteer-email-session": "^0.0.5",
+    "tempy": "^0.2.1"
+  }
+}

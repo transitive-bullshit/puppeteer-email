@@ -2,9 +2,11 @@
 
 const ow = require('ow')
 const PuppeteerEmailProviderOutlook = require('puppeteer-email-provider-outlook')
+const PuppeteerEmailProviderYahoo = require('puppeteer-email-provider-yahoo')
 
 exports.providers = {
-  'outlook': PuppeteerEmailProviderOutlook
+  'outlook': PuppeteerEmailProviderOutlook,
+  'yahoo': PuppeteerEmailProviderYahoo
 }
 
 exports.getProviderByName = (name, opts) => {
@@ -21,6 +23,8 @@ exports.getProviderByEmail = (email, opts) => {
   let Provider
   if (/@outlook\.com/i.test(email)) {
     Provider = module.exports.providers.outlook
+  } else if (/@yahoo\.com/i.test(email)) {
+    Provider = module.exports.providers.yahoo
   }
 
   if (!Provider) throw new Error(`unrecognized provider email "${email}"`)

@@ -165,7 +165,7 @@ module.exports = async (user, opts) => {
           // present after first failure
           for (let i = 0; i < authCodes.length; ++i) {
             const code = authCodes[i]
-            await page.type('#wlspispHipSolutionContainer input[type=text]', code, { visible: true })
+            await page.type('#wlspispHipSolutionContainer input[type=text]', code)
 
             let error = false
             await Promise.all([
@@ -268,8 +268,8 @@ module.exports = async (user, opts) => {
   await delay(500)
   await page.goto('https://www.outlook.com/?refd=account.microsoft.com&fref=home.banner.profile')
 
-  // inbox page first-run
-  // --------------------
+  // email inbox first-run
+  // ---------------------
 
   await delay(800)
 
