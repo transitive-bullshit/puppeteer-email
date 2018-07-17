@@ -2,10 +2,12 @@
 
 const faker = require('faker')
 const ow = require('ow')
-const puppeteer = require('puppeteer')
+const puppeteer = require('puppeteer-extra')
 
 const PuppeteerEmailProvider = require('puppeteer-email-provider')
 const providers = require('./lib/providers')
+
+puppeteer.use(require('puppeteer-extra-plugin-stealth')())
 
 /**
  * Main entrypoint for authenticating and automating a given email provider.

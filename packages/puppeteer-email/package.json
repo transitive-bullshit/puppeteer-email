@@ -30,6 +30,8 @@
     "puppeteer": "^1.6.0",
     "puppeteer-email-provider": "^0.0.5",
     "puppeteer-email-provider-outlook": "^0.1.0",
-    "puppeteer-email-provider-yahoo": "^0.0.2"
+    "puppeteer-email-provider-yahoo": "^0.0.2",
+    "puppeteer-extra": "^2.0.7",
+    "puppeteer-extra-plugin-stealth": "^2.0.7"
   }
 }
