@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-email-provider-yahoo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Puppeteer email provider for Yahoo.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",

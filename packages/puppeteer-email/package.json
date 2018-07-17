@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-email",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "Email automation driven by headless chrome.",
   "main": "index.js",
   "repository": "transitive-bullshit/puppeteer-email",
@@ -29,7 +29,7 @@
     "ow": "^0.6.0",
     "puppeteer": "^1.6.0",
     "puppeteer-email-provider": "^0.0.5",
-    "puppeteer-email-provider-outlook": "^0.0.7",
-    "puppeteer-email-provider-yahoo": "^0.0.1"
+    "puppeteer-email-provider-outlook": "^0.1.0",
+    "puppeteer-email-provider-yahoo": "^0.0.2"
   }
 }
