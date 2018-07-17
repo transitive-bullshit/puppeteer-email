@@ -1,5 +1,7 @@
 'use strict'
 
+// TODO: remove manual inputs for edge cases and bail instead -- breaks batch jobs
+
 const delay = require('delay')
 // const faker = require('faker') // TODO
 

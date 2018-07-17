@@ -30,6 +30,7 @@ module.exports = (argv) => {
     .option('-n, --first-name <name>', 'user first name')
     .option('-l, --last-name <name>', 'user last name')
     .option('-b, --birthday <date>', 'user birthday (month/day/year); eg 9/20/1986')
+    .option('-r, --repeat <number>', 'repeat signup multiple times in bulk', (s) => parseInt(s), 1)
     .action(async (opts) => {
       try {
         const client = new PuppeteerEmail(program.email || program.provider)
@@ -40,41 +41,59 @@ module.exports = (argv) => {
           ? new SMSNumberVerifier(program.smsProvider, { cocode: program.smsCountryCode })
           : null
 
-        /*
-        const number = '17204491791' // await smsNumberVerifier.getNumber()
-        console.log(number)
-        const codes = await smsNumberVerifier.getAuthCodes({ number, service: 'microsoft', timeout: 600000 })
-        console.log(codes)
-        */
+        const users = []
+        const errors = []
+        let session
 
-        const user = {
-          username: program.username,
-          password: program.password,
-          firstName: opts.firstName,
-          lastName: opts.lastName
-        }
+        const cleanup = async () => {
+          if (session) {
+            await session.close()
+            session = null
 
-        if (opts.birthday) {
-          const [ month, day, year ] = opts.birthday
-          user.birthday = { month, day, year }
-        }
-
-        const session = await client.signup(user, {
-          captchaSolver,
-          smsNumberVerifier,
-          puppeteer: {
-            headless: !!program.headless,
-            slowMo: program.slowMo
+            if (smsNumberVerifier && smsNumberVerifier.provider.close) {
+              await smsNumberVerifier.provider.close()
+            }
           }
-        })
+        }
 
-        user.email = session.email
-        console.log(JSON.stringify(user, null, 2))
+        for (let i = 0; i < opts.repeat; ++i) {
+          try {
+            const user = {
+              username: program.username,
+              password: program.password,
+              firstName: opts.firstName,
+              lastName: opts.lastName
+            }
 
-        await session.close()
+            if (opts.birthday) {
+              const [ month, day, year ] = opts.birthday
+              user.birthday = { month, day, year }
+            }
 
-        if (smsNumberVerifier && smsNumberVerifier.provider.close) {
-          await smsNumberVerifier.provider.close()
+            session = await client.signup(user, {
+              captchaSolver,
+              smsNumberVerifier,
+              puppeteer: {
+                headless: !!program.headless,
+                slowMo: program.slowMo
+              }
+            })
+
+            user.email = session.email
+            console.log(JSON.stringify(user, null, 2))
+            users.push(user)
+
+            await cleanup()
+          } catch (err) {
+            try { await cleanup() } catch (err) { }
+            console.warn(`signup error attempt ${i}`, err)
+          }
+        }
+
+        if (opts.repeat > 1) {
+          console.log(JSON.stringify(users, null, 2))
+          console.log(JSON.stringify(errors, null, 2))
+          console.log(`${users.length} users created; ${errors.length} errors`)
         }
       } catch (err) {
         console.error(err)

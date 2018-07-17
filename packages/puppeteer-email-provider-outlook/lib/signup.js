@@ -1,5 +1,7 @@
 'use strict'
 
+// TODO: remove manual inputs for edge cases and bail instead -- breaks batch jobs
+
 const delay = require('delay')
 const faker = require('faker')
 const tempy = require('tempy')
@@ -84,8 +86,9 @@ module.exports = async (user, opts) => {
   // captcha and/or sms validation
   // -----------------------------
 
-  await delay(1000)
+  await delay(1500)
   let waitForNavigation = true
+  let attempt = 0
 
   const waitForManualInput = async (msg) => {
     console.warn(msg)
@@ -96,7 +99,6 @@ module.exports = async (user, opts) => {
 
   // TODO: is it possible to go from sms verification to captcha or will it
   // always be captcha first?
-
   do {
     if (await page.$('#wlspispHipChallengeContainer')) {
       console.log('SMS NUMBER VALIDATION')
@@ -148,6 +150,15 @@ module.exports = async (user, opts) => {
             console.warn(`sms number error "${number}":`, error)
             blacklist.add(number)
 
+            if (/unavailable|cannot|too many|banned/i.test(error)) {
+              throw new Error(`sms verification failed "${number}" "${error}"`)
+            }
+
+            if (smsNumberVerifier.provider.addNumberToBlacklist) {
+              const result = await smsNumberVerifier.provider.addNumberToBlacklist({ service, number })
+              console.warn('sms adding to blacklist', { service, number }, result)
+            }
+
             await delay(1000)
             await page.focus('#wlspispHipChallengeContainer input[type=text]')
             for (let i = 0; i < shortNumber.length + 8; ++i) {
@@ -188,6 +199,11 @@ module.exports = async (user, opts) => {
 
             if (error) {
               console.warn('sms code error', { number, code }, error)
+
+              if (smsNumberVerifier.provider.addNumberToBlacklist) {
+                const result = await smsNumberVerifier.provider.addNumberToBlacklist({ service, number })
+                console.warn('sms adding to blacklist', { service, number }, result)
+              }
 
               await delay(1000)
               await page.focus('#wlspispHipSolutionContainer input[type=text]')
@@ -263,9 +279,13 @@ module.exports = async (user, opts) => {
       } else {
         await waitForManualInput('captcha solver required')
       }
+    } else if (attempt <= 0) {
+      await delay(5000)
     } else {
       await waitForManualInput('waiting for navigation')
     }
+
+    ++attempt
   } while (waitForNavigation)
 
   // main account page
