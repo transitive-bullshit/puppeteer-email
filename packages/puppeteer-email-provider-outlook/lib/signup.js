@@ -116,17 +116,15 @@ module.exports = async (user, opts) => {
           if (!number) break // TODO
 
           const info = smsNumberVerifier.getNumberInfo(number)
-          if (!info) break // TODO
+          if (!info || !info.isValid()) throw new Error() // TODO
 
-          // select country code
-          await page.select('#wlspispHipChallengeContainer select', info.iso.toUpperCase())
+          // select country code prefix
+          await page.select('#wlspispHipChallengeContainer select', info.getRegionCode().toUpperCase())
 
           // ignore country code prefix
-          if (number.startsWith(info.code)) {
-            number = number.slice(info.code.length)
-          }
+          const shortNumber = info.getNumber('significant')
 
-          await page.type('#wlspispHipChallengeContainer input[type=text]', number, { delay: 15 })
+          await page.type('#wlspispHipChallengeContainer input[type=text]', shortNumber, { delay: 15 })
           await delay(200)
           await page.click('#wlspispHipControlButtonsContainer a[title="Send SMS code"]', { delay: 28 })
 
@@ -144,7 +142,7 @@ module.exports = async (user, opts) => {
 
             await delay(1000)
             await page.focus('#wlspispHipChallengeContainer input[type=text]')
-            for (let i = 0; i < number.length + 8; ++i) {
+            for (let i = 0; i < shortNumber.length + 8; ++i) {
               await page.keyboard.press('Backspace')
             }
             await delay(1000)
