@@ -22,7 +22,8 @@ module.exports = (argv) => {
     .option('-s, --slow-mo <timeout>', '(puppeteer) slows down operations by the given ms', parseInt, 0)
     .option('-c, --captchaProvider <string>', 'API key for captcha provider', /^(anti-captcha)$/i, 'anti-captcha')
     .option('-k, --captchaKey <string>', 'Captcha solver provider')
-    .option('-s, --smsProvider <string>', 'SMS number verifier provider', 'getsmscode')
+    .option('-S, --smsProvider <string>', 'SMS number verifier provider', 'getsmscode')
+    .option('-C, --smsCountryCode <string>', 'SMS number verifier country code', 'hk')
 
   program
     .command('signup')
@@ -36,7 +37,7 @@ module.exports = (argv) => {
           ? new CaptchaSolver(program.captchaProvider, { key: program.captchaKey })
           : null
         const smsNumberVerifier = program.smsProvider
-          ? new SMSNumberVerifier(program.smsProvider)
+          ? new SMSNumberVerifier(program.smsProvider, { cocode: program.smsCountryCode })
           : null
 
         /*

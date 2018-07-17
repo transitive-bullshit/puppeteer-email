@@ -116,13 +116,21 @@ module.exports = async (user, opts) => {
           if (!number) break // TODO
 
           const info = smsNumberVerifier.getNumberInfo(number)
-          if (!info || !info.isValid()) throw new Error() // TODO
+          if (!info || !info.isValid()) throw new Error(`received invalid sms number "${number}"`)
 
           // select country code prefix
-          await page.select('#wlspispHipChallengeContainer select', info.getRegionCode().toUpperCase())
+          const regionCode = info.getRegionCode().toUpperCase()
 
           // ignore country code prefix
           const shortNumber = info.getNumber('significant')
+
+          console.log('sms verification', {
+            number,
+            regionCode,
+            shortNumber
+          })
+
+          await page.select('#wlspispHipChallengeContainer select', regionCode)
 
           await page.type('#wlspispHipChallengeContainer input[type=text]', shortNumber, { delay: 15 })
           await delay(200)
