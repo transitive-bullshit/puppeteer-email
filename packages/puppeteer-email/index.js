@@ -95,12 +95,20 @@ class PuppeteerEmail {
     user.birthday.day = user.birthday.day || '' + (random(1, 30) | 0)
     user.birthday.year = user.birthday.year || '' + (random(1960, 1992) | 0)
 
-    const browser = opts.browser || await puppeteer.launch(opts.puppeteer)
+    let browser
+    try {
+      browser = opts.browser || await puppeteer.launch(opts.puppeteer)
 
-    return this._provider.signup(user, {
-      browser,
-      ...opts
-    })
+      const session = await this._provider.signup(user, {
+        browser,
+        ...opts
+      })
+
+      return session
+    } catch (err) {
+      if (!opts.browser) await browser.close()
+      throw err
+    }
   }
 
   /**
@@ -122,27 +130,35 @@ class PuppeteerEmail {
    * @return {Promise<PuppeteerEmailSession>}
    */
   async signin (user, opts = { }) {
-    const browser = opts.browser || await puppeteer.launch(opts.puppeteer)
+    let browser
+    try {
+      browser = opts.browser || await puppeteer.launch(opts.puppeteer)
 
-    ow(user, ow.object.plain.nonEmpty.label('user'))
-    ow(user.password, ow.string.nonEmpty.label('user.password'))
+      ow(user, ow.object.plain.nonEmpty.label('user'))
+      ow(user.password, ow.string.nonEmpty.label('user.password'))
 
-    if (user.username) {
-      ow(user.username, ow.string.nonEmpty.label('user.username'))
-      user.email = `${user.username}@${this._provider.name}.com`
-      ow(user.email, ow.string.nonEmpty.label('user.email'))
-    } else if (user.email) {
-      ow(user.email, ow.string.nonEmpty.label('user.email'))
-      user.username = user.email.split('@')[0].trim()
-      ow(user.username, ow.string.nonEmpty.label('user.username'))
-    } else {
-      throw new Error('missing required parameter "username" or "email"')
+      if (user.username) {
+        ow(user.username, ow.string.nonEmpty.label('user.username'))
+        user.email = `${user.username}@${this._provider.name}.com`
+        ow(user.email, ow.string.nonEmpty.label('user.email'))
+      } else if (user.email) {
+        ow(user.email, ow.string.nonEmpty.label('user.email'))
+        user.username = user.email.split('@')[0].trim()
+        ow(user.username, ow.string.nonEmpty.label('user.username'))
+      } else {
+        throw new Error('missing required parameter "username" or "email"')
+      }
+
+      const session = await this._provider.signin(user, {
+        browser,
+        ...opts
+      })
+
+      return session
+    } catch (err) {
+      if (!opts.browser) await browser.close()
+      throw err
     }
-
-    return this._provider.signin(user, {
-      browser,
-      ...opts
-    })
   }
 }
 

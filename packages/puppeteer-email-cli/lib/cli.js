@@ -80,13 +80,14 @@ module.exports = (argv) => {
             })
 
             user.email = session.email
-            console.log(JSON.stringify(user, null, 2))
+            console.log('SUCCESS', JSON.stringify(user, null, 2))
             users.push(user)
 
             await cleanup()
           } catch (err) {
             try { await cleanup() } catch (err) { }
             console.warn(`signup error attempt ${i}`, err)
+            errors.push(err)
           }
         }
 

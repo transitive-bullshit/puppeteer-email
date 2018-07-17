@@ -46,8 +46,6 @@ module.exports = async (user, opts) => {
     }
   } while (error)
 
-  console.log(JSON.stringify(user, null, 2))
-
   // password
   // -------------------
 
@@ -86,7 +84,7 @@ module.exports = async (user, opts) => {
   // captcha and/or sms validation
   // -----------------------------
 
-  await delay(1500)
+  await delay(2000)
   let waitForNavigation = true
   let attempt = 0
 
@@ -174,7 +172,16 @@ module.exports = async (user, opts) => {
           break
         }
 
-        const authCodes = await smsNumberVerifier.getAuthCodes({ number, service })
+        let authCodes
+        try {
+          authCodes = await smsNumberVerifier.getAuthCodes({ number, service })
+        } catch (err) {
+          if (smsNumberVerifier.provider.addNumberToBlacklist) {
+            const result = await smsNumberVerifier.provider.addNumberToBlacklist({ service, number })
+            console.warn('sms adding to blacklist', { service, number }, result)
+            throw err
+          }
+        }
         console.log('sms request', service, number, authCodes)
 
         if (authCodes.length) {
@@ -223,6 +230,8 @@ module.exports = async (user, opts) => {
       } else {
         await waitForManualInput('sms number verification required')
       }
+    } else if (attempt <= 0) {
+      await delay(3000)
     } else if (await page.$('#hipTemplateContainer')) {
       console.log('CAPTCHA CHALLENGE')
 
@@ -279,8 +288,6 @@ module.exports = async (user, opts) => {
       } else {
         await waitForManualInput('captcha solver required')
       }
-    } else if (attempt <= 0) {
-      await delay(5000)
     } else {
       await waitForManualInput('waiting for navigation')
     }
