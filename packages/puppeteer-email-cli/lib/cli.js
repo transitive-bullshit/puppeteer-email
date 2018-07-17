@@ -44,6 +44,7 @@ module.exports = (argv) => {
         const users = []
         const errors = []
         let session
+        let user
 
         const cleanup = async () => {
           if (session) {
@@ -54,7 +55,7 @@ module.exports = (argv) => {
 
         for (let i = 0; i < opts.repeat; ++i) {
           try {
-            const user = {
+            user = {
               username: program.username,
               password: program.password,
               firstName: opts.firstName,
@@ -83,7 +84,7 @@ module.exports = (argv) => {
           } catch (err) {
             try { await cleanup() } catch (err) { }
             console.warn(`signup error attempt ${i}`, err)
-            errors.push(err)
+            errors.push({ ...user, err })
           }
         }
 
