@@ -9,4 +9,4 @@ const output = json
   .map((u) => `${u.firstName}\t${u.lastName}\t${u.birthday.month}/${u.birthday.day}/${u.birthday.year}\t${u.email}\t${u.password}`)
   .map((u) => u.toString()).join('\n')
 
-fs.writeFileSync('out.txt', output, 'utf8')
+console.log(output)
