@@ -1,5 +1,6 @@
 'use strict'
 
+// TODO: move addNumberToBlacklist and close to top-level SMSNumberVerifier
 // TODO: remove manual inputs for edge cases and bail instead -- breaks batch jobs
 
 const delay = require('delay')
@@ -175,52 +176,52 @@ module.exports = async (user, opts) => {
         let authCodes
         try {
           authCodes = await smsNumberVerifier.getAuthCodes({ number, service })
+          if (!authCodes || !authCodes.length) throw new Error(`unable to retrieve auth code ${number} ${service}`)
         } catch (err) {
           if (smsNumberVerifier.provider.addNumberToBlacklist) {
             const result = await smsNumberVerifier.provider.addNumberToBlacklist({ service, number })
             console.warn('sms adding to blacklist', { service, number }, result)
-            throw err
           }
+
+          throw err
         }
         console.log('sms request', service, number, authCodes)
 
-        if (authCodes.length) {
-          // TODO: likely won't work for multiple auth codes found because error will still be
-          // present after first failure
-          for (let i = 0; i < authCodes.length; ++i) {
-            const code = authCodes[i]
-            await page.type('#wlspispHipSolutionContainer input[type=text]', code)
+        // TODO: likely won't work for multiple auth codes found because error will still be
+        // present after first failure
+        for (let i = 0; i < authCodes.length; ++i) {
+          const code = authCodes[i]
+          await page.type('#wlspispHipSolutionContainer input[type=text]', code)
 
-            let error = false
-            await Promise.all([
-              page.click('#iSignupAction', { delay: 9 }),
-              Promise.race([
-                page.waitForNavigation({ timeout: 60000 })
-                  .then(() => { waitForNavigation = false }),
-                // page.waitFor('.alert.alert-error', { visible: true })
-                page.waitFor('.alert-error[aria-hidden=false]', { visible: true })
-                  .then(() => page.$eval('.alert-error[aria-hidden=false]', (e) => e.innerText))
-                  .then((e) => { error = e.trim() })
-              ])
+          let error = false
+          await Promise.all([
+            page.click('#iSignupAction', { delay: 9 }),
+            Promise.race([
+              page.waitForNavigation({ timeout: 60000 })
+                .then(() => { waitForNavigation = false }),
+              // page.waitFor('.alert.alert-error', { visible: true })
+              page.waitFor('.alert-error[aria-hidden=false]', { visible: true, timeout: 60000 })
+                .then(() => page.$eval('.alert-error[aria-hidden=false]', (e) => e.innerText))
+                .then((e) => { error = e.trim() })
             ])
+          ])
 
-            if (error) {
-              console.warn('sms code error', { number, code }, error)
+          if (error) {
+            console.warn('sms code error', { number, code }, error)
 
-              if (smsNumberVerifier.provider.addNumberToBlacklist) {
-                const result = await smsNumberVerifier.provider.addNumberToBlacklist({ service, number })
-                console.warn('sms adding to blacklist', { service, number }, result)
-              }
-
-              await delay(1000)
-              await page.focus('#wlspispHipSolutionContainer input[type=text]')
-              for (let i = 0; i < code.length + 8; ++i) {
-                await page.keyboard.press('Backspace')
-              }
-              await delay(1000)
-            } else {
-              break
+            if (smsNumberVerifier.provider.addNumberToBlacklist) {
+              const result = await smsNumberVerifier.provider.addNumberToBlacklist({ service, number })
+              console.warn('sms adding to blacklist', { service, number }, result)
             }
+
+            await delay(1000)
+            await page.focus('#wlspispHipSolutionContainer input[type=text]')
+            for (let i = 0; i < code.length + 8; ++i) {
+              await page.keyboard.press('Backspace')
+            }
+            await delay(1000)
+          } else {
+            break
           }
         }
 

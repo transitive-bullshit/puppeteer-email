@@ -12,7 +12,7 @@ module.exports = async (opts) => {
     query
   } = opts
 
-  ow(query, ow.string.nonEmpty)
+  ow(query, ow.string.nonEmpty.label('query'))
 
   const page = await browser.newPage()
   await page.goto('https://outlook.live.com/mail/inbox')
@@ -20,8 +20,12 @@ module.exports = async (opts) => {
   // search for an input query to narrow down email results
   // TODO: don't require a search query
   await page.waitFor('input[aria-label=Search]', { visible: true })
-  await page.type('input[aria-label=Search]', query)
-  await page.click('[data-click-source=search_box] [data-icon-name=Search]')
+  await delay(1000)
+  await page.focus('input[aria-label=Search]')
+  await page.click('input[aria-label=Search]')
+  await page.type('input[aria-label=Search]', query, { delay: 7 })
+  // await page.waitForNavigation({ timeout: 0 })
+  await page.click('button[aria-label=Search]')
   await delay(4000)
 
   const $emails = await page.$$('[data-convid] > div > div')
