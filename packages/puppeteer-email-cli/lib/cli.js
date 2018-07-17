@@ -49,10 +49,6 @@ module.exports = (argv) => {
           if (session) {
             await session.close()
             session = null
-
-            if (smsNumberVerifier && smsNumberVerifier.provider.close) {
-              await smsNumberVerifier.provider.close()
-            }
           }
         }
 
@@ -89,6 +85,10 @@ module.exports = (argv) => {
             console.warn(`signup error attempt ${i}`, err)
             errors.push(err)
           }
+        }
+
+        if (smsNumberVerifier && smsNumberVerifier.provider.close) {
+          await smsNumberVerifier.provider.close()
         }
 
         if (opts.repeat > 1) {

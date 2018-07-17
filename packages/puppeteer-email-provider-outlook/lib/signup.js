@@ -195,7 +195,7 @@ module.exports = async (user, opts) => {
             await Promise.all([
               page.click('#iSignupAction', { delay: 9 }),
               Promise.race([
-                page.waitForNavigation({ timeout: 0 })
+                page.waitForNavigation({ timeout: 60000 })
                   .then(() => { waitForNavigation = false }),
                 // page.waitFor('.alert.alert-error', { visible: true })
                 page.waitFor('.alert-error[aria-hidden=false]', { visible: true })
@@ -270,7 +270,7 @@ module.exports = async (user, opts) => {
           await Promise.all([
             page.click('#iSignupAction', { delay: 9 }),
             Promise.race([
-              page.waitForNavigation({ timeout: 0 })
+              page.waitForNavigation({ timeout: 60000 })
                 .then(() => { waitForNavigation = false }),
               page.waitFor('.alert-error[aria-hidden=false]', { visible: true })
                 .then(() => page.$eval('.alert-error[aria-hidden=false]', (e) => e.innerText))
@@ -298,13 +298,19 @@ module.exports = async (user, opts) => {
   // main account page
   // -----------------
 
-  await delay(500)
+  await delay(1000)
   await page.goto('https://www.outlook.com/?refd=account.microsoft.com&fref=home.banner.profile')
 
   // email inbox first-run
   // ---------------------
 
   await delay(800)
+
+  await Promise.race([
+    delay(2000),
+    page.waitFor('.dialog button.nextButton', { visible: true }),
+    page.waitFor('.dialog button.primaryButton', { visible: true })
+  ])
 
   // keep pressing next...
   while (true) {
@@ -321,7 +327,7 @@ module.exports = async (user, opts) => {
 
   await delay(120)
   await Promise.all([
-    page.waitForNavigation(),
+    page.waitForNavigation({ timeout: 60000 }),
     page.click('.dialog button.primaryButton', { delay: 7 })
   ])
 
