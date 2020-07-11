@@ -13,6 +13,7 @@ const { version } = require('../package')
 
 module.exports = (argv) => {
   program
+    .name('puppeteer-email')
     .version(version)
     .option('-u, --username <username>', 'email account username')
     .option('-p, --password <password>', 'email account password')
