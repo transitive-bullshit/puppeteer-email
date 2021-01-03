@@ -50,9 +50,9 @@ module.exports = async (user, opts) => {
   // password
   // -------------------
 
-  await page.waitFor('#Password', { visible: true })
+  await page.waitFor('#PasswordInput', { visible: true })
   await delay(100)
-  await page.type('#Password', user.password, { delay: 10 })
+  await page.type('#PasswordInput', user.password, { delay: 10 })
   await delay(100)
   await page.click('#iOptinEmail', { delay: 10 })
   await delay(100)
